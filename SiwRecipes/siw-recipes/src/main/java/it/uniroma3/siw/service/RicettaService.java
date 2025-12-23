@@ -3,7 +3,9 @@ package it.uniroma3.siw.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import it.uniroma3.siw.model.Ricetta;
 import it.uniroma3.siw.repository.RicettaRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RicettaService {
   
   @Autowired
@@ -18,4 +20,5 @@ public class RicettaService {
 	}
   
 }
+
 
