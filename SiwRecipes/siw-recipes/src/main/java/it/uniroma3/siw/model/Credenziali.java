@@ -1,10 +1,15 @@
 package it.uniroma3.siw.model;
 
 import java.util.Objects;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Credenziali {
@@ -12,9 +17,17 @@ public class Credenziali {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+
+	@NotBlank
+	@Column(unique = true)
 	private String email;
+
+	@NotBlank
 	private String password;
 	private String ruolo;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Utente utente;
 	
 	//Metodi Getter e Setter
 	
@@ -63,3 +76,4 @@ public class Credenziali {
 	}
 
 }
+
