@@ -1,6 +1,13 @@
 package it.uniroma3.siw.model;
 
+
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,11 +15,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Credenziali {
+public class Credenziali implements UserDetails{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -55,6 +63,47 @@ public class Credenziali {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
+
+	public Utente getUtente() {
+	    return utente;
+	}
+
+	public void setUtente(Utente utente) {
+	    this.utente = utente;
+	}
+
+	// ===== IMPLEMENTAZIONE DI USERDETAILS =====
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.ruolo));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 	
 	//Metodi equals e hashCode
 	
@@ -76,4 +125,5 @@ public class Credenziali {
 	}
 
 }
+
 
