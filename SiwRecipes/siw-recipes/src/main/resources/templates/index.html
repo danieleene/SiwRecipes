@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SiwRecipes</title>
+
+    <!-- Collegamento al CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>SiwRecipes</h1>
+    <nav>
+        <a href="/login">Login</a>
+        <a href="/register">Registrati</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Benvenuto nel ricettario online</h2>
+    <p>Qui troverai tante ricette deliziose.</p>
+
+	<div class="recipes-preview">
+	    <h3>Le ultime ricette</h3>
+
+	    <div th:each="ricetta : ${ricette}" class="recipe-card">
+	        <a th:href="@{'/ricetta/' + ${ricetta.id}}">
+	            <h4 th:text="${ricetta.titolo}">Titolo ricetta</h4>
+	            <p th:text="${ricetta.descrizioneBreve}">Descrizione breve</p>
+	        </a>
+	    </div>
+	</div>
+
+</div>
+
+</body>
+</html>
