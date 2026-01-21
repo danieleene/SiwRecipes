@@ -1,10 +1,16 @@
 package it.uniroma3.siw.model;
 
+import java.util.List;
 import java.util.Objects;
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+
 
 @Entity
 public class Utente {
@@ -12,9 +18,22 @@ public class Utente {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+
+	@NotBlank
 	private String nome;
+
+	@NotBlank
 	private String cognome;
 	private String stato;
+
+	
+	@OneToMany
+	private List<Recensione> recensioni;
+	
+	
+	@OneToMany
+	private List<Ricetta> ricette;
+	
 	
 	//Metodi Getter e Setter
 	
@@ -63,3 +82,4 @@ public class Utente {
 	}
 		
 }
+
