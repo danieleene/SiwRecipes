@@ -26,9 +26,22 @@ public class AuthenticationController {
 	
 	
 	
+
 	@PostMapping("/register")
-	public String registerUser(@ModelAttribute Credenziali credenziali, Model model) {
+	public String registerUser(@ModelAttribute("credenziali") Credenziali credenziali) {
+
+		// Il ruolo arriva dal form (USER o ADMIN)
+		String ruolo = credenziali.getRuolo();
+		credenziali.setRuolo(ruolo);
+
+
+	    // Collego le entità (se non lo fa già il form)
+	    Utente utente = credenziali.getUtente();
+	    utente.setCredenziali(credenziali);
+
+	    // Salvo SOLO credenziali (cascade salva anche utente)
 	    credenzialiService.saveCredenziali(credenziali);
+
 	    return "redirect:/login";
 	}
 
