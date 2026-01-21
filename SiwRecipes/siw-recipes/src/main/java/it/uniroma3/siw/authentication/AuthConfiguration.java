@@ -15,6 +15,8 @@ public class AuthConfiguration {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/index", "/css/**", "/images/**", "/login", "/register").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                   
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
