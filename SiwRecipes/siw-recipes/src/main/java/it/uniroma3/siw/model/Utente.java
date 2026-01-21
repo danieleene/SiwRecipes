@@ -33,6 +33,9 @@ public class Utente {
 	
 	@OneToMany
 	private List<Ricetta> ricette;
+
+	@OneToOne(mappedBy = "utente")
+	private Credenziali credenziali;
 	
 	
 	//Metodi Getter e Setter
@@ -61,6 +64,13 @@ public class Utente {
 	public void setStato(String stato) {
 		this.stato = stato;
 	}
+
+	public Credenziali getCredenziali() {
+		return credenziali;
+	}
+	public void setCredenziali(Credenziali credenziali) {
+		this.credenziali = credenziali;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -82,4 +92,5 @@ public class Utente {
 	}
 		
 }
+
 
