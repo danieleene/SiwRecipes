@@ -11,13 +11,28 @@ public class CredenzialiService {
 	@Autowired
 	private CredenzialiRepository credenzialiRepository;
 
+	//Per ottenere le credenziali partendo dall'ID
 	public Credenziali getCredenzialiById(Long id) {
 		return credenzialiRepository.findById(id).get();
 	}
 
+	//Per ottenere tutte le credenziali
 	public Iterable<Credenziali> getAllCredenziali() {
 		return credenzialiRepository.findAll();
 	}
+
+	//Per ottenere le credenziali da username(NO) email
+	public Credenziali getCredenziali(String email) {
+        Optional<Credenziali> result = this.credenzialiRepository.findByEmail(email);
+        return result.orElse(null);
+    }
+
+	//Per salvare le credenziali
+	public Credenziali saveCredenziali(Credenziali credenziali) {
+        //credentials.setRole("DEFAULT"); // Set default role
+        //credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        return this.credenzialiRepository.save(credenziali);
+    }
 
 	
 }
