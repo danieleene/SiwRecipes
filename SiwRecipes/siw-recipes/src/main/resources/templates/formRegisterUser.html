@@ -19,15 +19,22 @@
 <div class="form-container">
     <h2>Registrazione</h2>
 
-	<form th:action="@{/register}" method="post">
+	<form th:action="@{/register}" th:object="${credenziali}" method="post">
 
-	    <!-- DATI UTENTE -->
-	    <input th:field="${utente.nome}" placeholder="Nome">
-	    <input th:field="${utente.cognome}" placeholder="Cognome">
+	   <!-- DATI UTENTE -->
+	    <input th:field="*{utente.nome}" placeholder="Nome">
+	    <input th:field="*{utente.cognome}" placeholder="Cognome">
 
 	    <!-- CREDENZIALI -->
-	    <input th:field="${credenziali.email}" placeholder="Email">
-	    <input th:field="${credenziali.password}" placeholder="Password">
+	    <input th:field="*{email}" placeholder="Email">
+	    <input th:field="*{password}" placeholder="Password">
+		
+		<!-- RUOLO -->
+		<label>Ruolo:</label>
+		<select th:field="*{ruolo}">
+		    <option value="USER">USER</option>
+		    <option value="ADMIN">ADMIN</option>
+		</select>
 
 	    <button type="submit">Registrati</button>
 	</form>
