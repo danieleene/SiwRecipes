@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - SiwRecipes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>SiwRecipes</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/register">Registrati</a>
+    </nav>
+</header>
+
+<div class="form-container">
+    <h2>Accedi</h2>
+
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Email o Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Non hai un account? <a href="/register">Registrati</a></p>
+</div>
+
+</body>
+</html>
