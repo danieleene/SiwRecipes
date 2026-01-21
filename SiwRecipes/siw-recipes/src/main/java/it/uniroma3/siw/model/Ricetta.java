@@ -1,11 +1,16 @@
 package it.uniroma3.siw.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -14,13 +19,28 @@ public class Ricetta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+
+	@NotBlank
 	private String titolo;
+
+	@Column(length = 2000)
 	private String descrizione;
+
+	@Column(length = 2000)
 	private String procedimento;
 	private Integer tempo;
 	private String difficolta;
 	private String categoria;
 	private Date data;
+
+	@OneToMany
+	private List<Ingrediente> ingredienti;
+	
+	@OneToMany
+	private List<Recensione> recensioni;
+
+
+
 	
 	//Metodi Getter e Setter
 	public Long getId() {
@@ -95,3 +115,4 @@ public class Ricetta {
 	
 	
 }
+
