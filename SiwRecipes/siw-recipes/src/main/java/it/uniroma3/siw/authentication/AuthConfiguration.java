@@ -2,17 +2,25 @@ package it.uniroma3.siw.authentication;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class AuthConfiguration {
 
+    @Autowired
+	private UserDetailsService userDetailsService;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .userDetailsService(userDetailsService)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/index", "/css/**", "/images/**", "/login", "/register").permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
@@ -21,6 +29,7 @@ public class AuthConfiguration {
             )
             .formLogin(form -> form
                 .loginPage("/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout
