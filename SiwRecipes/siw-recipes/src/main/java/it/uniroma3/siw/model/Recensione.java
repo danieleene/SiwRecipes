@@ -14,9 +14,14 @@ public class Recensione {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+
+	@Column(length = 2000)
 	private String testo;
 	private Integer voto;
 	private Date data;
+
+	@ManyToOne
+	private Ricetta ricetta;
 	
 	//Metodi Getter e Setter
 	
@@ -65,3 +70,4 @@ public class Recensione {
 	}
 	
 }
+
