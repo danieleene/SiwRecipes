@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${ricetta.titolo}">Dettagli Ricetta</title>
+</head>
+<body>
+  <h1 th:text="${ricetta.titolo}">Titolo</h1>
+  <p th:text="${ricetta.descrizioneBreve}">Descrizione breve</p>
+  <p><strong>Ingredienti:</strong></p>
+  <ul>
+    <li th:each="ingrediente : ${ricetta.ingredienti}" th:text="${ingrediente}">Ingrediente</li>
+  </ul>
+  <p><strong>Procedimento:</strong></p>
+  <p th:text="${ricetta.procedimento}">Testo procedimento</p>
+  <p><strong>Tempo:</strong> <span th:text="${ricetta.tempoPreparazione}">Tempo</span></p>
+  <p><strong>Difficoltà:</strong> <span th:text="${ricetta.difficolta}">Difficoltà</span></p>
+  <p><strong>Categoria:</strong> <span th:text="${ricetta.categoria}">Categoria</span></p>
+  <p><strong>Autore:</strong> <span th:text="${ricetta.autore.nome}">Autore</span></p>
+  <p><strong>Data:</strong> <span th:text="${#dates.format(ricetta.dataInserimento, 'dd/MM/yyyy')}">Data</span></p>
+</body>
+</html>
