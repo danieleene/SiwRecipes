@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
@@ -15,6 +18,7 @@ import it.uniroma3.siw.service.CredenzialiService;
 public class AuthenticationController {
 	
 	@Autowired CredenzialiService credenzialiService;
+	@Autowired private PasswordEncoder passwordEncoder;
 	
 	//REGISTER FORM
 	@GetMapping(value = "/register")
@@ -33,6 +37,9 @@ public class AuthenticationController {
 		// Il ruolo arriva dal form (USER o ADMIN)
 		String ruolo = credenziali.getRuolo();
 		credenziali.setRuolo(ruolo);
+
+		//Codifica la password prima di salvarla
+		credenziali.setPassword(passwordEncoder.encode(credenziali.getPassword()));
 
 
 	    // Collego le entità (se non lo fa già il form)
@@ -55,7 +62,19 @@ public class AuthenticationController {
 	//INDEX
 	@GetMapping(value = "/")
 	public String index(Model model) {
-		return "index.html";
+
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication != null && authentication.isAuthenticated()
+	            && !(authentication instanceof AnonymousAuthenticationToken)) {
+
+	        Credenziali cred = (Credenziali) authentication.getPrincipal();
+
+	        model.addAttribute("email", cred.getEmail());
+	        model.addAttribute("ruolo", cred.getRuolo());
+	    }
+
+	    return "index.html";
 	}
 	
 	
