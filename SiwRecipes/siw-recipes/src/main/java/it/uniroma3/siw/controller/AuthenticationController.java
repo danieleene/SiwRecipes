@@ -46,6 +46,9 @@ public class AuthenticationController {
 	    Utente utente = credenziali.getUtente();
 	    utente.setCredenziali(credenziali);
 
+		//Imposto lo stato iniziale
+	    utente.setStato("ATTIVO");
+
 	    // Salvo SOLO credenziali (cascade salva anche utente)
 	    credenzialiService.saveCredenziali(credenziali);
 
