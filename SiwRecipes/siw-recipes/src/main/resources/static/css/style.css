@@ -85,3 +85,132 @@ a {
     text-decoration: none;
     color: #4CAF50;
 }
+/* --- FORM RICETTE: WRAPPER --- */
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* --- CARD DEL FORM --- */
+.form-card {
+    width: 600px; /* proporzionato e leggibile */
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* --- TITOLO DEL FORM --- */
+.form-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* --- CONTENUTO DEL FORM --- */
+.form-content {
+    width: 100%;
+}
+
+/* --- GRUPPI DI INPUT --- */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* --- LABEL --- */
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+/* --- INPUT, TEXTAREA, SELECT --- */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* Textarea più comoda */
+.form-group textarea {
+    min-height: 120px;
+}
+
+/* --- BOTTONE --- */
+.btn-container {
+    text-align: center;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* --- LINK INDIETRO --- */
+.back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #4CAF50;
+}
+
+/* --- PAGINA DETTAGLIO RICETTA --- */
+
+.recipe-detail-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.recipe-detail-container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 32px;
+    color: #333;
+}
+
+.recipe-detail-container p {
+    margin: 12px 0;
+}
+
+.recipe-detail-container strong {
+    color: #4CAF50;
+}
+
+.recipe-detail-container .section-title {
+    margin-top: 25px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.back-home-link {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #4CAF50;
+}
