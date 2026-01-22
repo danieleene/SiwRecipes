@@ -1,0 +1,41 @@
+package it.uniroma3.siw.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.UtenteService;
+
+@Controller
+public class AdminController {
+
+    @Autowired
+    private UtenteService utenteService;
+
+    @PostMapping("/admin/utente/{id}/banna")
+    public String bannaUtente(@PathVariable Long id) {
+        Utente utente = utenteService.getUtenteById(id);
+        utente.setStato("BANNATO");
+        utenteService.saveUtente(utente);
+        return "redirect:/admin/gestioneUtenti";
+    }
+
+    @PostMapping("/admin/utente/{id}/attiva")
+    public String attivaUtente(@PathVariable Long id) {
+        Utente utente = utenteService.getUtenteById(id);
+        utente.setStato("ATTIVO");
+        utenteService.saveUtente(utente);
+        return "redirect:/admin/gestioneUtenti";
+    }
+    
+    @GetMapping("/admin/gestioneUtenti")
+    public String gestioneUtenti(Model model) {
+        model.addAttribute("utenti", utenteService.getAllUtenti());
+        return "admin/gestioneUtenti.html";
+    }
+
+}
