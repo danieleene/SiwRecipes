@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
@@ -39,8 +41,9 @@ public class Ricetta {
 	@OneToMany
 	private List<Recensione> recensioni;
 
-
-
+	@ManyToOne
+	@JoinColumn(name = "autore_id")
+	private Utente autore;
 	
 	//Metodi Getter e Setter
 	public Long getId() {
@@ -91,6 +94,13 @@ public class Ricetta {
 	public void setData(Date data) {
 		this.data = data;
 	}
+
+	public Utente getAutore() {
+		return autore;
+	}
+	public void setAutore(Utente autore) {
+		this.autore = autore;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -115,4 +125,5 @@ public class Ricetta {
 	
 	
 }
+
 
