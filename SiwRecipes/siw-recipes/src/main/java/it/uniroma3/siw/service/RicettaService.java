@@ -1,11 +1,14 @@
 package it.uniroma3.siw.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Ricetta;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.RicettaRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,9 @@ public class RicettaService {
   
   @Autowired
 	private RicettaRepository ricettaRepository;
+
+ @Autowired
+	private CredenzialiService credenzialiService;
 
 	//Per ottenere una ricetta a partire dall' ID
 	public Ricetta getRicettaById(Long id) {
@@ -25,10 +31,7 @@ public class RicettaService {
 		return ricettaRepository.findAll();
 	}
 
-	//Per salvare una ricetta
-	public void saveRicetta(Ricetta nuovaRicetta) {
-		this.ricettaRepository.save(nuovaRicetta);
-	}
+	
 
 	//Per eliminare una ricetta a partire dal suo ID
 	public void deleteRicettaById(Long ricettaID) {
@@ -39,8 +42,26 @@ public class RicettaService {
 	public List<Ricetta> searchRicette(String query){
 		return this.ricettaRepository.searchRicette(query);
 	}
+
+	//Per creare una ricetta con autore
+	public Ricetta creaRicetta(Ricetta ricetta) {
+
+	    Credenziali credenziali = this.credenzialiService.getCurrentCredentials();
+	    Utente utente = credenziali.getUtente();
+	    
+	    // BLOCCO UTENTE NON ATTIVO
+	    if (!"ATTIVO".equals(utente.getStato())) {
+	    	throw new RuntimeException("Utente non autorizzato a creare ricette");
+	    }
+
+	    ricetta.setAutore(credenziali.getUtente());
+	    ricetta.setData(new Date());
+
+	    return this.ricettaRepository.save(ricetta);
+	}
   
 }
+
 
 
 
