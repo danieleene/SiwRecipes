@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Ricetta;
+import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.RicettaService;
 
 @Controller
@@ -16,11 +19,20 @@ public class RicettaController {
   
   @Autowired RicettaService ricettaService;
 
-	  //Risponde con una pagina che contiene la form per inserire i dati di un nuovo film
+@Autowired CredenzialiService credenzialiService;
+
+	  //Risponde con una pagina che contiene la form per inserire i dati di una nuova ricetta
 	  @GetMapping("/formNewRicetta")
 	    public String formNewRicetta(Model model) {
-	    model.addAttribute("ricetta", new Ricetta());
-	    return "formNewRicetta.html";
+			Credenziali cred = credenzialiService.getCurrentCredentials();
+		    Utente utente = cred.getUtente();
+		  
+		   // BLOCCO UTENTE NON ATTIVO
+		   if (!"ATTIVO".equals(utente.getStato())) {
+			  return "accessoNegato.html";
+		  }
+	       model.addAttribute("ricetta", new Ricetta());
+	       return "formNewRicetta.html";
 	  }
 
 	//Gestisce i dati di una nuova ricetta raccolti dalla form: se la ricetta non esiste,
@@ -28,10 +40,19 @@ public class RicettaController {
 	  //salvati nel db, se la ricetta esiste già risponde con la pagina che mostra la form 
 	  //e con un messaggio di errore (la ricetta esiste)
 	  @PostMapping("/ricetta")
-	  public String newRicetta(@ModelAttribute("ricetta") Ricetta ricetta, Model model) {
-		this.ricettaService.saveRicetta(ricetta);
-	    model.addAttribute("ricetta", ricetta);
-	      return "redirect:ricetta/" + ricetta.getId();
+	  public String newRicetta(@ModelAttribute("ricetta") Ricetta ricetta) {
+
+		  Credenziali cred = credenzialiService.getCurrentCredentials();
+		  Utente utente = cred.getUtente();
+		  
+		// BLOCCO UTENTE NON ATTIVO
+		  if (!"ATTIVO".equals(utente.getStato())) {
+			  return "accessoNegato.html";
+		  }
+		  
+		  Ricetta salvata = this.ricettaService.saveRicetta(ricetta);
+	      
+	      return "redirect:ricetta/" + salvata.getId();
 	  }
 
       //Risponde con una pagina che contiene i dettagli della ricetta	  
@@ -49,5 +70,6 @@ public class RicettaController {
 	  }
   
 }
+
 
 
