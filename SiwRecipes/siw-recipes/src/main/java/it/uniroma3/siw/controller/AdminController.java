@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.UtenteService;
 
 @Controller
@@ -16,8 +18,18 @@ public class AdminController {
     @Autowired
     private UtenteService utenteService;
 
+    @Autowired
+   private CredenzialiService credenzialiService;
+
     @PostMapping("/admin/utente/{id}/banna")
     public String bannaUtente(@PathVariable Long id) {
+        Credenziali logged = credenzialiService.getCurrentCredentials();
+    	
+    	// Impedisce all'ADMIN di bannare sé stesso
+    	if (logged.getUtente().getId().equals(id)) {
+    		return "redirect:/error/operazione-non-permessa";
+    	}
+        
         Utente utente = utenteService.getUtenteById(id);
         utente.setStato("BANNATO");
         utenteService.saveUtente(utente);
