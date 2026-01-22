@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.repository.CredenzialiRepository;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Service
 public class CredenzialiService {
 	
@@ -34,5 +37,18 @@ public class CredenzialiService {
         return this.credenzialiRepository.save(credenziali);
     }
 
-	
+	//Per ottenere le credenziali dell'utente attualmente autenticato
+	public Credenziali getCurrentCredentials() {
+	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+	    String email;
+
+	    if (principal instanceof UserDetails) {
+	        email = ((UserDetails) principal).getUsername();
+	    } else {
+	        email = principal.toString();
+	    }
+
+	    return this.getCredenziali(email);
+	}
 }
