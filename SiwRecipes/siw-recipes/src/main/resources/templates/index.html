@@ -12,10 +12,28 @@
 
 <header>
     <h1>SiwRecipes</h1>
-    <nav>
-        <a href="/login">Login</a>
-        <a href="/register">Registrati</a>
-    </nav>
+	<nav>
+	    <!-- Utente NON loggato -->
+	    <span th:if="${email == null}">
+	        <a href="/login">Login</a>
+	        <a href="/register">Registrati</a>
+	    </span>
+
+	    <!-- Utente loggato -->
+	    <span th:if="${email != null}">
+	        <span th:text="${email}"></span>
+	        (<span th:text="${ruolo}"></span>)
+	        <a href="/logout" style="margin-left: 10px;">Logout</a>
+			
+			<!-- Link visibile SOLO agli ADMIN -->
+			<a th:if="${ruolo == 'ADMIN'}"
+			href="/admin/gestioneUtenti"
+			style="margin-left: 20px;">
+			Gestione Utenti
+			</a>
+	    </span>
+	</nav>
+
 </header>
 
 <div class="container">
