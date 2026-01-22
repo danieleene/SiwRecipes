@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Utenti</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Gestione Utenti</h1>
+    <nav>
+        <a href="/">Home</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h2>Lista Utenti</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Ruolo</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="utente : ${utenti}">
+                <td th:text="${utente.id}"></td>
+                <td th:text="${utente.credenziali.email}"></td>
+                <td th:text="${utente.nome}"></td>
+                <td th:text="${utente.cognome}"></td>
+                <td th:text="${utente.credenziali.ruolo}"></td>
+                <td th:text="${utente.stato}"></td>
+
+                <td>
+                    <!-- Se ATTIVO, mostra pulsante BANNA -->
+                    <form th:if="${utente.stato == 'ATTIVO'}"
+                          th:action="@{'/admin/utente/' + ${utente.id} + '/banna'}"
+                          method="post">
+                        <button type="submit">Banna</button>
+                    </form>
+
+                    <!-- Se BANNATO, mostra pulsante ATTIVA -->
+                    <form th:if="${utente.stato == 'BANNATO'}"
+                          th:action="@{'/admin/utente/' + ${utente.id} + '/attiva'}"
+                          method="post">
+                        <button type="submit">Attiva</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
