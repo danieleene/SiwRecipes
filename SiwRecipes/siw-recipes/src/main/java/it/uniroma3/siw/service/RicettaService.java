@@ -33,9 +33,40 @@ public class RicettaService {
 
 	
 
-	//Per eliminare una ricetta a partire dal suo ID
-	public void deleteRicettaById(Long ricettaID) {
-		this.ricettaRepository.deleteById(ricettaID);
+	//Per eliminare una ricetta con controllo del ruolo e permessi
+	public void deleteRicetta(Long ricettaId) {
+
+	    Credenziali cred = this.credenzialiService.getCurrentCredentials();
+	    Utente utente = cred.getUtente();
+	    String ruolo = cred.getRuolo(); // "ADMIN" o "USER"
+
+	    Ricetta ricetta = this.ricettaRepository.findById(ricettaId)
+	            .orElseThrow(() -> new RuntimeException("Ricetta non trovata"));
+	    
+	    //BLOCCA UTENTE NON ATTIVO
+	    if (!"ATTIVO".equals(utente.getStato())) {
+	        throw new RuntimeException("Utente non autorizzato a eliminare ricette");
+	    }
+
+
+	    // ADMIN può cancellare tutto
+	    if ("ADMIN".equals(ruolo)) {
+	        this.ricettaRepository.delete(ricetta);
+	        return;
+	    }
+
+	    // USER può cancellare solo le proprie ricette
+	    if ("USER".equals(ruolo)) {
+	        if (ricetta.getAutore().getId().equals(utente.getId())) {
+	            this.ricettaRepository.delete(ricetta);
+	            return;
+	        } else {
+	            throw new RuntimeException("Non sei autorizzato a cancellare questa ricetta");
+	        }
+	    }
+
+	    // Utente non loggato o ruolo sconosciuto
+	    throw new RuntimeException("Accesso negato");
 	}
 	
 	//Per cercare le ricette dalla barra di ricerca
@@ -61,6 +92,7 @@ public class RicettaService {
 	}
   
 }
+
 
 
 
