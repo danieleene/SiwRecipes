@@ -58,7 +58,16 @@ public class RicettaController {
       //Risponde con una pagina che contiene i dettagli della ricetta	  
 	  @GetMapping("/ricetta/{id}")
 	  public String getRicetta(@PathVariable("id") Long id, Model model) {
-	    model.addAttribute("ricetta", this.ricettaService.getRicettaById(id));
+		  
+	    Ricetta ricetta = this.ricettaService.getRicettaById(id);
+		  model.addAttribute("ricetta", ricetta);
+		  
+		// Recupero credenziali utente loggato
+		  Credenziali cred = credenzialiService.getCurrentCredentials();
+		  if (cred != null) {
+			  model.addAttribute("ruolo", cred.getRuolo());
+			  model.addAttribute("utenteLoggatoId", cred.getUtente().getId());
+		  }
 	    return "ricetta.html";
 	  }
 
@@ -68,8 +77,21 @@ public class RicettaController {
 	    model.addAttribute("ricette", this.ricettaService.getAllRicette());
 	    return "ricette.html";
 	  }
+
+	//Risponde con la Homepage se la cancellazione è andata a buon fine
+	  @GetMapping("/ricetta/delete/{id}")
+	  public String deleteRicetta(@PathVariable("id") Long id, Model model) {
+	      try {
+	          this.ricettaService.deleteRicetta(id);
+	          return "redirect:/index"; // torna alla home
+	      } catch (RuntimeException e) {
+	          model.addAttribute("messaggioErrore", e.getMessage());
+	          return "accessoNegato.html";
+	      }
+	  }
   
 }
+
 
 
 
