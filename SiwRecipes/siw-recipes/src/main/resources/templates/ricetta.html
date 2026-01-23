@@ -34,6 +34,13 @@
        <span th:text="${#dates.format(ricetta.data, 'dd/MM/yyyy')}">Data</span>
     </p>
 
+	  <!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
+	<div th:if="${ruolo == 'ADMIN' or utenteLoggatoId == ricetta.autore.id}">
+	    <a th:href="@{'/ricetta/delete/' + ${ricetta.id}}" class="delete-button">
+	        Elimina ricetta
+	    </a>
+	</div>
+
     <a th:href="@{/}" class="back-home-link">Torna alla Home</a>
 
   </div>
