@@ -12,12 +12,16 @@
 
     <p th:text="${ricetta.descrizione}">Descrizione breve</p>
 	
-	<!--
-	  <p><strong>Ingredienti:</strong></p>
-	  <ul>
-	    <li th:each="ingrediente : ${ricetta.ingredienti}" th:text="${ingrediente}">Ingrediente</li>
-	  </ul>
-	  -->
+	<p class="section-title">Ingredienti</p>
+
+	<ul class="ingredienti-list">
+	    <li th:each="ing : ${ricetta.ingredienti}">
+	        <strong th:text="${ing.nome}"></strong>
+	        :
+	        <span th:text="${ing.quantita}"></span>
+	        <span th:text="${ing.unita}"></span>
+	    </li>
+	</ul>
 
     <p class="section-title">Procedimento</p>
     <p th:text="${ricetta.procedimento}">Testo procedimento</p>
