@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title th:text="${ricetta.titolo}">Dettagli Ricetta</title>
+  
   <!-- Collegamento al CSS -->
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -23,6 +24,8 @@
 	    </li>
 	</ul>
 
+	
+
     <p class="section-title">Procedimento</p>
     <p th:text="${ricetta.procedimento}">Testo procedimento</p>
 
@@ -37,13 +40,14 @@
     <p><strong>Data:</strong> 
        <span th:text="${#dates.format(ricetta.data, 'dd/MM/yyyy')}">Data</span>
     </p>
-
-	  <!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
+	
+	<!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
 	<div th:if="${ruolo == 'ADMIN' or utenteLoggatoId == ricetta.autore.id}">
 	    <a th:href="@{'/ricetta/delete/' + ${ricetta.id}}" class="delete-button">
 	        Elimina ricetta
 	    </a>
 	</div>
+
 
     <a th:href="@{/}" class="back-home-link">Torna alla Home</a>
 
