@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credenziali;
+import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Ricetta;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
@@ -31,7 +32,13 @@ public class RicettaController {
 		   if (!"ATTIVO".equals(utente.getStato())) {
 			  return "accessoNegato.html";
 		  }
-	       model.addAttribute("ricetta", new Ricetta());
+
+		   Ricetta ricetta = new Ricetta();
+		  ricetta.setIngredienti(new ArrayList<>());
+		  
+		  ricetta.getIngredienti().add(new Ingrediente());
+			
+	       model.addAttribute("ricetta", ricetta);
 	       return "formNewRicetta.html";
 	  }
 
@@ -49,8 +56,20 @@ public class RicettaController {
 		  if (!"ATTIVO".equals(utente.getStato())) {
 			  return "accessoNegato.html";
 		  }
+
+		  //Rimuovi gli ingredienti completamente vuoti
+		  ricetta.getIngredienti().removeIf(ing ->
+		  (ing.getNome() == null || ing.getNome().isBlank()) &&
+		  ing.getQuantita() == 0 &&
+				  (ing.getUnita() == null || ing.getUnita().isBlank())
+		  );
+
+		  //Collego ogni ingrediente alla ricetta
+		  for (Ingrediente ing : ricetta.getIngredienti()) {
+			  ing.setRicetta(ricetta);
+		  }
 		  
-		  Ricetta salvata = this.ricettaService.saveRicetta(ricetta);
+		  Ricetta salvata = this.ricettaService.creaRicetta(ricetta);
 	      
 	      return "redirect:ricetta/" + salvata.getId();
 	  }
@@ -91,6 +110,7 @@ public class RicettaController {
 	  }
   
 }
+
 
 
 
