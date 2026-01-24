@@ -96,32 +96,32 @@
 					</div>
 
 
-			<!-- TEMPLATE NASCOSTO PER NUOVI INGREDIENTI -->
-			<div id="ingrediente-template" class="ingrediente-group ingrediente-item" style="display:none;">
-
-			    <div class="form-group">
-			        <label>Nome ingrediente</label>
-			        <input type="text" name="ingredienti[IDX].nome" placeholder="Es. Farina" required>
-			    </div>
-
-			    <div class="form-group">
-			        <label>Quantità</label>
-			        <input type="number" step="0.01" name="ingredienti[IDX].quantita" placeholder="Es. 200" required>
-			    </div>
-
-			    <div class="form-group">
-			        <label>Unità di misura</label>
-			        <input type="text" name="ingredienti[IDX].unita" placeholder="Es. g" required>
-			    </div>
-
-			    <hr>
-			</div>
-
 			
             <div class="btn-container">
                 <button type="submit" class="btn">Salva Ricetta</button>
             </div>
         </form>
+		
+		<!-- TEMPLATE NASCOSTO PER NUOVI INGREDIENTI -->
+					<div id="ingrediente-template" class="ingrediente-group" style="display:none;">
+
+					    <div class="form-group">
+					        <label>Nome ingrediente</label>
+					        <input type="text" name="ingredienti[IDX].nome" placeholder="Es. Farina" >
+					    </div>
+
+					    <div class="form-group">
+					        <label>Quantità</label>
+					        <input type="number" step="0.01" name="ingredienti[IDX].quantita" placeholder="Es. 200" >
+					    </div>
+
+					    <div class="form-group">
+					        <label>Unità di misura</label>
+					        <input type="text" name="ingredienti[IDX].unita" placeholder="Es. g" >
+					    </div>
+
+					    <hr>
+					</div>
 
         <a th:href="@{/}" class="back-link">Torna alla Home</a>
 
@@ -134,7 +134,8 @@
     const addBtn = document.getElementById("add-ingrediente-btn");
 
     addBtn.addEventListener("click", () => {
-        const index = container.children.length; // nuovo indice
+		const index = container.querySelectorAll(".ingrediente-item").length;
+
 
         // clona il template
         const clone = template.cloneNode(true);
