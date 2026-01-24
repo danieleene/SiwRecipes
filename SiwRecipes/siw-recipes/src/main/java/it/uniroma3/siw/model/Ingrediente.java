@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -14,10 +16,15 @@ public class Ingrediente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank
 	private String nome;
 	private double quantita;
 	private String unita;
+
+	@ManyToOne
+	@JoinColumn(name = "ricetta_id")
+	private Ricetta ricetta;
 	
 	//Metodi Getter e Setter 
 	
@@ -38,6 +45,13 @@ public class Ingrediente {
 	}
 	public void setUnita(String unita) {
 		this.unita = unita;
+	}
+
+	public Ricetta getRicetta() {
+		return ricetta;
+	}
+	public void setRicetta(Ricetta ricetta) {
+		this.ricetta = ricetta;
 	}
 	
 	//Metodi equals e hashCode
@@ -61,4 +75,5 @@ public class Ingrediente {
 	}
 		
 }
+
 
