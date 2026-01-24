@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Ricetta {
 	private String categoria;
 	private Date data;
 
-	@OneToMany
+	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ingrediente> ingredienti;
 	
 	@OneToMany
@@ -46,6 +47,7 @@ public class Ricetta {
 	private Utente autore;
 	
 	//Metodi Getter e Setter
+	
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +103,13 @@ public class Ricetta {
 	public void setAutore(Utente autore) {
 		this.autore = autore;
 	}
+
+	public List<Ingrediente> getIngredienti() {
+		return ingredienti;
+	}
+	public void setIngredienti(List<Ingrediente> ingredienti) {
+		this.ingredienti = ingredienti;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -125,5 +134,6 @@ public class Ricetta {
 	
 	
 }
+
 
 
