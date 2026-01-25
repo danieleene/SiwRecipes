@@ -36,6 +36,8 @@ public class Ricetta {
 	private String categoria;
 	private Date data;
 
+	private String nomeImmagine;
+
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ingrediente> ingredienti;
 	
@@ -110,6 +112,14 @@ public class Ricetta {
 	public void setIngredienti(List<Ingrediente> ingredienti) {
 		this.ingredienti = ingredienti;
 	}
+
+
+	public String getNomeImmagine() {
+		return nomeImmagine;
+	}
+	public void setNomeImmagine(String nomeImmagine) {
+		this.nomeImmagine = nomeImmagine;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -134,6 +144,7 @@ public class Ricetta {
 	
 	
 }
+
 
 
 
