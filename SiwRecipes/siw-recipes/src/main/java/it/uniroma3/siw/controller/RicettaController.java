@@ -68,6 +68,24 @@ public class RicettaController {
 		  for (Ingrediente ing : ricetta.getIngredienti()) {
 			  ing.setRicetta(ricetta);
 		  }
+
+
+		   /*
+		//GESTIONE UPLOAD IMMAGINE
+		  if (!fileImmagine.isEmpty()) {
+			// Nome file unico
+			  String nomeFile = java.util.UUID.randomUUID().toString() + "_" + fileImmagine.getOriginalFilename();
+			  
+			// Percorso dove salvare l'immagine
+			  java.nio.file.Path path = java.nio.file.Paths.get("src/main/resources/static/images/" + nomeFile);
+			  
+			// Salvataggio fisico del file
+			  java.nio.file.Files.copy(fileImmagine.getInputStream(), path);
+			  
+			// Salvo il nome nella ricetta
+			  ricetta.setNomeImmagine(nomeFile);
+		  }
+		  */
 		  
 		  Ricetta salvata = this.ricettaService.creaRicetta(ricetta);
 	      
@@ -110,6 +128,7 @@ public class RicettaController {
 	  }
   
 }
+
 
 
 
