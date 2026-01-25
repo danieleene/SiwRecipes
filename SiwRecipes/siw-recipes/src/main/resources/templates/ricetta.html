@@ -11,6 +11,17 @@
 
     <h1 th:text="${ricetta.titolo}">Titolo</h1>
 
+<!--
+	
+
+	<div class="ricetta-immagine" th:if="${ricetta.nomeImmagine != null}">
+	    <img th:src="@{'/images/' + ${ricetta.nomeImmagine}}"
+	         alt="Foto della ricetta"
+	         style="max-width: 400px; border-radius: 10px; margin: 20px 0;">
+	</div>
+
+-->	  
+
     <p th:text="${ricetta.descrizione}">Descrizione breve</p>
 	
 	<p class="section-title">Ingredienti</p>
