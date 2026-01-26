@@ -51,6 +51,14 @@
     <p><strong>Data:</strong> 
        <span th:text="${#dates.format(ricetta.data, 'dd/MM/yyyy')}">Data</span>
     </p>
+
+	  <!-- Link "Aggiungi recensione" visibile solo se utente loggato e NON bannato -->
+		<div th:if="${utenteLoggato != null and utenteLoggato.stato != 'BANNATO'}">
+			<a th:href="@{'/ricetta/' + ${ricetta.id} + '/recensione/new'}"
+			class="add-review-button">
+			Aggiungi recensione
+			</a>
+	    </div>
 	
 	<!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
 	<div th:if="${ruolo == 'ADMIN' or utenteLoggatoId == ricetta.autore.id}">
@@ -59,6 +67,35 @@
 	    </a>
 	</div>
 
+	  <p class="section-title">Recensioni</p>
+
+	<div th:if="${ricetta.recensioni != null and #lists.isEmpty(ricetta.recensioni) == false}">
+	    
+	    <div class="recensione" th:each="rec : ${ricetta.recensioni}">
+	        
+	        <p>
+	            <strong th:text="${rec.autore.nome}">Autore</strong>
+	            -
+	            <span th:text="${#dates.format(rec.data, 'dd/MM/yyyy')}">Data</span>
+	        </p>
+
+	        <p th:text="${rec.testo}">Testo recensione</p>
+
+	        <!-- Link ELIMINA recensione: visibile solo ad autore o admin -->
+	        <a th:if="${(ruolo == 'ADMIN') or (utenteLoggatoId == rec.autore.id and utenteLoggato.stato != 'BANNATO')}"
+	           th:href="@{'/recensione/' + ${rec.id} + '/delete'}"
+	           class="delete-review-button">
+	            Cancella recensione
+	        </a>
+
+	        <hr>
+	    </div>
+
+	</div>
+
+	<div th:if="${ricetta.recensioni == null or #lists.isEmpty(ricetta.recensioni)}">
+	    <p>Nessuna recensione presente.</p>
+	</div>
 
     <a th:href="@{/}" class="back-home-link">Torna alla Home</a>
 
