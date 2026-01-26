@@ -32,7 +32,7 @@ public class Credenziali implements UserDetails{
 
 	@NotBlank
 	private String password;
-	private String ruolo;
+	private String ruolo= "USER";
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utente utente;
@@ -125,5 +125,6 @@ public class Credenziali implements UserDetails{
 	}
 
 }
+
 
 
