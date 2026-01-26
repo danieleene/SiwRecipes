@@ -41,7 +41,7 @@ public class Ricetta {
 	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ingrediente> ingredienti;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Recensione> recensioni;
 
 	@ManyToOne
@@ -120,6 +120,13 @@ public class Ricetta {
 	public void setNomeImmagine(String nomeImmagine) {
 		this.nomeImmagine = nomeImmagine;
 	}
+
+	public List<Recensione> getRecensioni() {
+		return recensioni;
+	}
+	public void setRecensioni(List<Recensione> recensioni) {
+		this.recensioni = recensioni;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -144,6 +151,7 @@ public class Ricetta {
 	
 	
 }
+
 
 
 
