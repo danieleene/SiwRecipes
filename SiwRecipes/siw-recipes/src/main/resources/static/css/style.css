@@ -249,3 +249,13 @@ a {
     transform: scale(1.03);
     box-shadow: 0 6px 18px rgba(0,0,0,0.22);
 }
+
+.delete-review-button {
+    color: red;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+.delete-review-button:hover {
+    text-decoration: underline;
+}
