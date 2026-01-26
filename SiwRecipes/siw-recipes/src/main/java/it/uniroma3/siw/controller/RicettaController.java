@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+//import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Ingrediente;
@@ -25,6 +29,7 @@ public class RicettaController {
 	  //Risponde con una pagina che contiene la form per inserire i dati di una nuova ricetta
 	  @GetMapping("/formNewRicetta")
 	    public String formNewRicetta(Model model) {
+			
 			Credenziali cred = credenzialiService.getCurrentCredentials();
 		    Utente utente = cred.getUtente();
 		  
@@ -39,6 +44,7 @@ public class RicettaController {
 		  ricetta.getIngredienti().add(new Ingrediente());
 			
 	       model.addAttribute("ricetta", ricetta);
+			
 	       return "formNewRicetta.html";
 	  }
 
@@ -104,6 +110,7 @@ public class RicettaController {
 		  if (cred != null) {
 			  model.addAttribute("ruolo", cred.getRuolo());
 			  model.addAttribute("utenteLoggatoId", cred.getUtente().getId());
+			  model.addAttribute("utenteLoggato", cred.getUtente()); //per verificare se è bannato o meno
 		  }
 	    return "ricetta.html";
 	  }
@@ -128,6 +135,7 @@ public class RicettaController {
 	  }
   
 }
+
 
 
 
