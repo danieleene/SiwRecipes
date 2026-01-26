@@ -22,17 +22,19 @@
 	<form th:action="@{/register}" th:object="${credenziali}" method="post">
 
 	   <!-- DATI UTENTE -->
-	    <input th:field="*{utente.nome}" placeholder="Nome">
-	    <input th:field="*{utente.cognome}" placeholder="Cognome">
+	    <input type="text" th:field="*{utente.nome}" placeholder="Nome">
+	    <input type="text" th:field="*{utente.cognome}" placeholder="Cognome">
 
 	    <!-- CREDENZIALI -->
-	    <input th:field="*{email}" placeholder="Email">
-	    <input th:field="*{password}" placeholder="Password">
+	    <input type="text" th:field="*{email}" placeholder="Email">
+	    <input type="text" th:field="*{password}" placeholder="Password">
 		
 		
 
 	    <button type="submit">Registrati</button>
 	</form>
+
+	<p>Hai già un account? <a href="/login">Accedi</a></p>
 
 </div>
 
