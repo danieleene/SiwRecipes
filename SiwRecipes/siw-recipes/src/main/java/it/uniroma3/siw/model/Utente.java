@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 
@@ -24,10 +25,10 @@ public class Utente {
 
 	@NotBlank
 	private String cognome;
-	private String stato;
+	private String stato;   // valori: "ATTIVO", "BANNATO"
 
 	
-	@OneToMany
+	@OneToMany(mappedBy = "autore")
 	private List<Recensione> recensioni;
 	
 	
@@ -92,5 +93,6 @@ public class Utente {
 	}
 		
 }
+
 
 
