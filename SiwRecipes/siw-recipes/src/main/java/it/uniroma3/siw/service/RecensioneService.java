@@ -19,5 +19,12 @@ public class RecensioneService {
 		return recensioneRepository.findAll();
 	}
 
+	public Recensione saveRecensione(Recensione recensione) {
+	    return this.recensioneRepository.save(recensione);
+	}
+	
+	public void deleteRecensione(Recensione recensione) {
+	    recensioneRepository.delete(recensione);
+	}
 	
 }
