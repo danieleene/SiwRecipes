@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Recensione</title>
+	<!-- Collegamento al CSS -->
+	  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Scrivi una recensione</h1>
+
+<form th:action="@{'/ricetta/' + ${ricetta.id} + '/recensione'}"
+      th:object="${recensione}"
+      method="post">
+
+    <!-- Testo recensione -->
+    <label for="testo">Testo:</label><br>
+    <textarea id="testo" name="testo" th:field="*{testo}" rows="6" cols="60"></textarea>
+    <br><br>
+
+    <!-- Voto -->
+    <label for="voto">Voto (1-5):</label>
+    <input type="number" id="voto" name="voto" th:field="*{voto}" min="1" max="5">
+    <br><br>
+
+    <button type="submit">Invia Recensione</button>
+</form>
+
+<br>
+<a th:href="@{'/ricetta/' + ${ricetta.id}}">Torna alla ricetta</a>
+
+</body>
+</html>
