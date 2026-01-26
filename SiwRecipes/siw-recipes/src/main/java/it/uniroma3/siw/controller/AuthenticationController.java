@@ -10,15 +10,20 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
+import it.uniroma3.siw.service.RicettaService;
 
 @Controller
 public class AuthenticationController {
 	
 	@Autowired CredenzialiService credenzialiService;
+	
 	@Autowired private PasswordEncoder passwordEncoder;
+
+	@Autowired private RicettaService ricettaService;
 	
 	//REGISTER FORM
 	@GetMapping(value = "/register")
@@ -66,6 +71,7 @@ public class AuthenticationController {
 	@GetMapping(value = "/")
 	public String index(Model model) {
 
+		// Recupero autenticazione
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	    if (authentication != null && authentication.isAuthenticated()
@@ -76,6 +82,9 @@ public class AuthenticationController {
 	        model.addAttribute("email", cred.getEmail());
 	        model.addAttribute("ruolo", cred.getRuolo());
 	    }
+
+		//Passo le ricette alla homepage (visibili a tutti)
+	    model.addAttribute("ricette", ricettaService.getAllRicette());
 
 	    return "index.html";
 	}
