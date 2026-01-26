@@ -33,7 +33,10 @@ public class AuthConfiguration {
                 .permitAll()
             )
             .logout(logout -> logout
+				.logoutUrl("/logout")	
                 .logoutSuccessUrl("/")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
                 .permitAll()
             );
 
