@@ -3,32 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Nuova Recensione</title>
-	<!-- Collegamento al CSS -->
-	  <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<h1>Scrivi una recensione</h1>
+<div class="page-wrapper">
+    <div class="form-card">
 
-<form th:action="@{'/ricetta/' + ${ricetta.id} + '/recensione'}"
-      th:object="${recensione}"
-      method="post">
+        <h1 class="form-title">Scrivi una Recensione</h1>
 
-    <!-- Testo recensione -->
-    <label for="testo">Testo:</label><br>
-    <textarea id="testo" name="testo" th:field="*{testo}" rows="6" cols="60"></textarea>
-    <br><br>
+        <form th:action="@{'/ricetta/' + ${ricetta.id} + '/recensione'}"
+              th:object="${recensione}"
+              method="post"
+              class="form-content">
 
-    <!-- Voto -->
-    <label for="voto">Voto (1-5):</label>
-    <input type="number" id="voto" name="voto" th:field="*{voto}" min="1" max="5">
-    <br><br>
+            <!-- Testo recensione -->
+            <div class="form-group">
+                <label for="testo">Testo della recensione</label>
+                <textarea id="testo" th:field="*{testo}" placeholder="Scrivi qui la tua recensione..."></textarea>
+            </div>
 
-    <button type="submit">Invia Recensione</button>
-</form>
+			<!-- Voto -->
+			<div class="form-group">
+			    <label for="voto">Voto (1-5)</label>
+			    <input type="number" id="voto" th:field="*{voto}" min="1" max="5" oninput="updateStars()">
 
-<br>
-<a th:href="@{'/ricetta/' + ${ricetta.id}}">Torna alla ricetta</a>
+			    <!-- Stelle dinamiche -->
+			    <div id="starPreview" class="star-preview"></div>
+			</div>
+
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Invia Recensione</button>
+            </div>
+        </form>
+
+        <a class="back-link" th:href="@{'/ricetta/' + ${ricetta.id}}">Torna alla ricetta</a>
+
+    </div>
+</div>
+
+<script>
+document.getElementById("voto").addEventListener("keydown", function(e) {
+    const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+    if (allowedKeys.includes(e.key)) return;
+
+    if (!/^[1-5]$/.test(e.key)) {
+        e.preventDefault();
+    }
+});
+
+document.getElementById("voto").addEventListener("input", function(e) {
+    let value = e.target.value;
+
+    if (!/^[1-5]$/.test(value)) {
+        e.target.value = "";
+        document.getElementById("starPreview").innerHTML = "";
+    }
+});
+</script>
+
+
+<script>
+function updateStars() {
+    const votoInput = document.getElementById("voto");
+    let voto = parseInt(votoInput.value);
+
+    if (isNaN(voto)) {
+        document.getElementById("starPreview").innerHTML = "";
+        return;
+    }
+
+    // Clamping (non serve quasi più, ma è una sicurezza)
+    if (voto < 1) voto = 1;
+    if (voto > 5) voto = 5;
+
+    votoInput.value = voto;
+
+    let stars = "";
+    for (let i = 0; i < voto; i++) {
+        stars += "⭐";
+    }
+
+    document.getElementById("starPreview").innerHTML = stars;
+}
+</script>
+
+
 
 </body>
 </html>
