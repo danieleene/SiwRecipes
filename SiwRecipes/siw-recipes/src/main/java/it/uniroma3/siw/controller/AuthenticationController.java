@@ -39,9 +39,8 @@ public class AuthenticationController {
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute("credenziali") Credenziali credenziali) {
 
-		// Il ruolo arriva dal form (USER o ADMIN)
-		String ruolo = credenziali.getRuolo();
-		credenziali.setRuolo(ruolo);
+		//Imposto SEMPRE il ruolo di default (a USER)
+		credenziali.setRuolo("USER");
 
 		//Codifica la password prima di salvarla
 		credenziali.setPassword(passwordEncoder.encode(credenziali.getPassword()));
