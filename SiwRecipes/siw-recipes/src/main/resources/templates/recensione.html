@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Recensione</title>
+	<!-- Collegamento al CSS -->
+	  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Dettaglio Recensione</h1>
+
+<div>
+    <p><strong>Autore:</strong> 
+        <span th:text="${recensione.autore.nome + ' ' + recensione.autore.cognome}"></span>
+    </p>
+
+    <p><strong>Data:</strong>
+        <span th:text="${#dates.format(recensione.data, 'dd/MM/yyyy')}"></span>
+    </p>
+
+    <p><strong>Voto:</strong>
+        <span th:text="${recensione.voto}"></span> / 5
+    </p>
+
+    <p><strong>Testo:</strong></p>
+    <p th:text="${recensione.testo}"></p>
+</div>
+
+<hr>
+
+<!-- Pulsanti visibili solo se l’utente è loggato -->
+<div sec:authorize="isAuthenticated()">
+
+    <!-- Recupero utente loggato -->
+    <div th:with="utente=${#authentication.principal}">
+        
+        <!-- Mostra MODIFICA solo se autore e NON bannato -->
+        <a th:if="${recensione.autore.id == utente.utente.id
+		            and recensione.autore.stato != 'BANNATO'}"
+           th:href="@{'/recensione/' + ${recensione.id} + '/edit'}">
+            Modifica recensione
+        </a>
+
+        <br><br>
+
+        <!-- Mostra CANCELLA se autore OPPURE admin -->
+        <a th:if="${recensione.autore.id == utente.utente.id
+		            or utente.authorities[0].authority == 'ADMIN'}"
+           th:href="@{'/recensione/' + ${recensione.id} + '/delete'}">
+            Cancella recensione
+        </a>
+
+    </div>
+</div>
+
+<br><br>
+
+<a th:href="@{'/ricetta/' + ${recensione.ricetta.id}}">Torna alla ricetta</a>
+
+</body>
+</html>
