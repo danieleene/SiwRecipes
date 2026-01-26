@@ -23,7 +23,10 @@
 	    <span th:if="${email != null}">
 	        <span th:text="${email}"></span>
 	        (<span th:text="${ruolo}"></span>)
-	        <a href="/logout" style="margin-left: 10px;">Logout</a>
+
+			<form th:action="@{/logout}" method="post" style="display:inline;">
+			    <button type="submit" class="nav-link">Logout</button>
+			</form>
 			
 			<!-- Link visibile SOLO agli ADMIN -->
 			<a th:if="${ruolo == 'ADMIN'}"
