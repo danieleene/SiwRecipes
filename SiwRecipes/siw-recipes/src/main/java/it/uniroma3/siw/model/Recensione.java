@@ -2,11 +2,13 @@ package it.uniroma3.siw.model;
 
 import java.util.Date;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Recensione {
@@ -20,6 +22,10 @@ public class Recensione {
 	private Integer voto;
 	private Date data;
 
+
+	@ManyToOne
+	private Utente autore;
+	
 	@ManyToOne
 	private Ricetta ricetta;
 	
@@ -49,6 +55,19 @@ public class Recensione {
 	public void setData(Date data) {
 		this.data = data;
 	}
+
+	public Utente getAutore() {
+		return autore;
+	}
+	public void setAutore(Utente autore) {
+		this.autore = autore;
+	}
+	public Ricetta getRicetta() {
+		return ricetta;
+	}
+	public void setRicetta(Ricetta ricetta) {
+		this.ricetta = ricetta;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -70,4 +89,5 @@ public class Recensione {
 	}
 	
 }
+
 
