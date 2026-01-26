@@ -22,7 +22,7 @@ public class AuthConfiguration {
         http
             .userDetailsService(userDetailsService)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/index", "/css/**", "/images/**", "/login", "/register").permitAll()
+                .requestMatchers("/", "/index", "/css/**", "/images/**", "/login", "/register", "/ricetta/**").permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                    
                 .anyRequest().authenticated()
