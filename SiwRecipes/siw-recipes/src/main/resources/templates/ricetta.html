@@ -79,6 +79,10 @@
 	            <span th:text="${#dates.format(rec.data, 'dd/MM/yyyy')}">Data</span>
 	        </p>
 
+			<p class="rec-stars">
+			    <span th:each="i : ${#numbers.sequence(1, rec.voto)}">⭐</span>
+			</p>
+
 	        <p th:text="${rec.testo}">Testo recensione</p>
 
 	        <!-- Link ELIMINA recensione: visibile solo ad autore o admin -->
