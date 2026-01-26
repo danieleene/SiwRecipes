@@ -92,21 +92,41 @@ a {
     padding: 40px 0;
 }
 
-/* --- CARD DEL FORM --- */
+/* --- FORM RECENSIONE:  --- */
 .form-card {
-    width: 600px; /* proporzionato e leggibile */
+    width: 550px;
     background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 35px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* --- TITOLO DEL FORM --- */
+/* --- TITOLO --- */
 .form-title {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 26px;
+    margin-bottom: 30px;
+    font-size: 28px;
     font-weight: bold;
+    color: #333;
+}
+
+/* --- TEXTAREA PROPORZIONATA --- */
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* --- INPUT NUMBER PIÙ LARGO E ARMONIOSO --- */
+.form-group input[type="number"] {
+    width: 120px;
+}
+
+/* --- ANIMAZIONE LEGGERA --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* --- CONTENUTO DEL FORM --- */
@@ -139,10 +159,6 @@ a {
     box-sizing: border-box;
 }
 
-/* Textarea più comoda */
-.form-group textarea {
-    min-height: 120px;
-}
 
 /* --- BOTTONE --- */
 .btn-container {
@@ -271,4 +287,19 @@ a {
     padding: 0;
     cursor: pointer;
     
+}
+
+/* --- STILE PER LE STELLINE --- */
+
+.star-preview {
+    font-size: 1.5rem;
+    color: gold;
+    margin-top: 5px;
+}
+
+/* ---STELLINE NELLA PAGINA DI DETTAGLIO RICETTA --- */
+.rec-stars {
+    font-size: 1.4rem;
+    color: gold;
+    margin: 0;
 }
