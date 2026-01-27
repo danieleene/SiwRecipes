@@ -59,7 +59,22 @@
 			Aggiungi recensione
 			</a>
 	    </div>
-	
+
+
+	  <!-- Pulsante MODIFICA visibile solo ad ADMIN o autore -->
+		<div th:if="${ruolo == 'ADMIN' 
+		            or (ruolo == 'USER' 
+		                and utenteLoggato.stato == 'ATTIVO' 
+		                and ricetta.autore.id == utenteLoggatoId)}">
+
+		    <a th:href="@{'/ricetta/' + ${ricetta.id} + '/edit'}" 
+		       class="btn btn-warning">
+		        Modifica
+		    </a>
+
+		</div>
+	  
+	  
 	<!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
 	<div th:if="${ruolo == 'ADMIN' or utenteLoggatoId == ricetta.autore.id}">
 	    <a th:href="@{'/ricetta/delete/' + ${ricetta.id}}" class="delete-button">
