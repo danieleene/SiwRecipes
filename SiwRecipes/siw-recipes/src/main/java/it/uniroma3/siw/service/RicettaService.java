@@ -90,8 +90,14 @@ public class RicettaService {
 
 	    return this.ricettaRepository.save(ricetta);
 	}
+
+	//Per salvare una ricetta 
+	public Ricetta saveRicetta(Ricetta ricetta) {
+	    return this.ricettaRepository.save(ricetta);
+	}
   
 }
+
 
 
 
