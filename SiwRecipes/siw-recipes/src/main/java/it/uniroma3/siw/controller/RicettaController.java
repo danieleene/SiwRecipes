@@ -133,8 +133,99 @@ public class RicettaController {
 	          return "accessoNegato.html";
 	      }
 	  }
+
+	@GetMapping("/ricetta/{id}/edit")
+	  public String editRicettaForm(@PathVariable("id") Long id, Model model) {
+
+	      Credenziali cred = credenzialiService.getCurrentCredentials();
+
+	      // Utente non loggato
+	      if (cred == null) {
+	          return "accessoNegato.html";
+	      }
+
+	      Utente utente = cred.getUtente();
+
+	      // Utente bannato
+	      if (!"ATTIVO".equals(utente.getStato())) {
+	          return "accessoNegato.html";
+	      }
+
+	      Ricetta ricetta = ricettaService.getRicettaById(id);
+
+	      // Controllo permessi
+	      boolean isAdmin = cred.getRuolo().equals("ADMIN");
+	      boolean isAutore = ricetta.getAutore().getId().equals(utente.getId());
+
+	      if (!isAdmin && !isAutore) {
+	          return "accessoNegato.html";
+	      }
+
+	      // Passo la ricetta al form
+	      model.addAttribute("ricetta", ricetta);
+
+	      return "formEditRicetta.html";
+	  }
+	  
+	  
+	  @PostMapping("/ricetta/{id}/edit")
+	  public String updateRicetta(@PathVariable("id") Long id,
+	                              @ModelAttribute("ricetta") Ricetta ricettaModificata) {
+
+	      Credenziali cred = credenzialiService.getCurrentCredentials();
+
+	      if (cred == null) {
+	          return "accessoNegato.html";
+	      }
+
+	      Utente utente = cred.getUtente();
+
+	      if (!"ATTIVO".equals(utente.getStato())) {
+	          return "accessoNegato.html";
+	      }
+
+	      Ricetta ricettaOriginale = ricettaService.getRicettaById(id);
+
+	      boolean isAdmin = cred.getRuolo().equals("ADMIN");
+	      boolean isAutore = ricettaOriginale.getAutore().getId().equals(utente.getId());
+
+	      if (!isAdmin && !isAutore) {
+	          return "accessoNegato.html";
+	      }
+
+	      // Aggiorno i campi modificabili
+	      ricettaOriginale.setTitolo(ricettaModificata.getTitolo());
+	      ricettaOriginale.setDescrizione(ricettaModificata.getDescrizione());
+	      ricettaOriginale.setProcedimento(ricettaModificata.getProcedimento());
+	      ricettaOriginale.setTempo(ricettaModificata.getTempo());
+	      ricettaOriginale.setDifficolta(ricettaModificata.getDifficolta());
+	      ricettaOriginale.setCategoria(ricettaModificata.getCategoria());
+
+	      //Aggiornamento ingredienti
+	      
+	     // 1. Rimuovi ingredienti completamente vuoti
+	      ricettaModificata.getIngredienti().removeIf(ing ->
+	      (ing.getNome() == null || ing.getNome().isBlank()) &&
+	      (ing.getQuantita() == 0) &&
+	      (ing.getUnita() == null || ing.getUnita().isBlank())
+	      );
+	      
+	      // 2. Svuota la lista originale (orphanRemoval farà il resto)
+	      ricettaOriginale.getIngredienti().clear();
+	      
+	      // 3. Riaggiungi ingredienti aggiornati
+	      for (Ingrediente ing : ricettaModificata.getIngredienti()) {
+	    	  ing.setRicetta(ricettaOriginale); // fondamentale per la relazione bidirezionale
+	    	  ricettaOriginale.getIngredienti().add(ing);
+	      }
+
+	      ricettaService.saveRicetta(ricettaOriginale);
+
+	      return "redirect:/ricetta/" + id;
+	  }
   
 }
+
 
 
 
