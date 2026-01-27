@@ -267,6 +267,8 @@ a {
 }
 
 .delete-review-button {
+	display: block;
+	text-align: right;
     color: red;
     font-size: 0.9em;
     text-decoration: none;
