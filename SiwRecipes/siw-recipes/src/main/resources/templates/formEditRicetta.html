@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Ricetta</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<h1>Modifica Ricetta</h1>
+
+<form th:action="@{'/ricetta/' + ${ricetta.id} + '/edit'}" th:object="${ricetta}" method="post">
+
+    <label for="titolo">Titolo:</label>
+    <input type="text" id="titolo" th:field="*{titolo}" required />
+
+    <label for="descrizione">Descrizione:</label>
+    <textarea id="descrizione" th:field="*{descrizione}" rows="4"></textarea>
+
+    <label for="procedimento">Procedimento:</label>
+    <textarea id="procedimento" th:field="*{procedimento}" rows="6"></textarea>
+
+    <label for="tempo">Tempo (minuti):</label>
+    <input type="number" id="tempo" th:field="*{tempo}" min="1" />
+
+    <label for="difficolta">Difficoltà:</label>
+    <select id="difficolta" th:field="*{difficolta}">
+        <option value="FACILE">Facile</option>
+        <option value="MEDIA">Media</option>
+        <option value="DIFFICILE">Difficile</option>
+    </select>
+
+    <label for="categoria">Categoria:</label>
+    <input type="text" id="categoria" th:field="*{categoria}" />
+
+	<h3>Ingredienti</h3>
+
+	<div id="ingredienti-container">
+	    <div th:each="ing, iter : ${ricetta.ingredienti}" class="ingrediente-item">
+	        
+	        <div>
+	            <label>Nome:</label>
+	            <input type="text" th:field="*{ingredienti[__${iter.index}__].nome}" />
+	        </div>
+
+	        <div>
+	            <label>Quantità:</label>
+	            <input type="number" th:field="*{ingredienti[__${iter.index}__].quantita}" />
+	        </div>
+
+	        <div>
+	            <label>Unità:</label>
+	            <input type="text" th:field="*{ingredienti[__${iter.index}__].unita}" />
+	        </div>
+			
+			<!--BOTTONE RIMUOVI sull'ingrediente' -->
+			<button type="button" class="remove-btn" onclick="rimuoviIngrediente(this)">Rimuovi</button>
+
+	        <hr>
+	    </div>
+	</div>
+
+
+	<!-- Pulsante per aggiungere un nuovo ingrediente -->
+	<button type="button" onclick="aggiungiIngrediente()">Aggiungi ingrediente</button>
+
+	
+	<script>
+	function aggiungiIngrediente() {
+	    const container = document.getElementById("ingredienti-container");
+	    const items = container.querySelectorAll(".ingrediente-item");
+
+	    const last = items[items.length - 1];
+	    const clone = last.cloneNode(true);
+
+	    clone.querySelectorAll("input").forEach(input => {
+	        input.value = "";
+	    });
+
+	    container.appendChild(clone);
+	    rinumeraIngredienti();
+	}
+
+	function rimuoviIngrediente(button) {
+	    const item = button.closest(".ingrediente-item");
+	    item.remove();
+	    rinumeraIngredienti();
+	}
+
+	function rinumeraIngredienti() {
+	    const items = document.querySelectorAll(".ingrediente-item");
+
+	    items.forEach((item, index) => {
+	        item.querySelectorAll("input").forEach(input => {
+
+	            if (input.name) {
+	                const base = input.name.substring(0, input.name.indexOf("["));
+	                const field = input.name.substring(input.name.indexOf("]") + 1);
+	                input.name = base + "[" + index + "]" + field;
+	            }
+
+	            if (input.id) {
+	                input.id = input.id.replace(/\d+/, index);
+	            }
+	        });
+	    });
+	}
+	</script>
+
+
+
+
+
+
+    <button type="submit">Salva modifiche</button>
+
+</form>
+
+</body>
+</html>
