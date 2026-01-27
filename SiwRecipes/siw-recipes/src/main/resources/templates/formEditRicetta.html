@@ -8,114 +8,137 @@
 
 <body>
 
-<h1>Modifica Ricetta</h1>
+<div class="page-wrapper">
+    <div class="form-card">
 
-<form th:action="@{'/ricetta/' + ${ricetta.id} + '/edit'}" th:object="${ricetta}" method="post">
+        <h1 class="form-title">Modifica Ricetta</h1>
 
-    <label for="titolo">Titolo:</label>
-    <input type="text" id="titolo" th:field="*{titolo}" required />
+        <form th:action="@{'/ricetta/' + ${ricetta.id} + '/edit'}"
+              th:object="${ricetta}" method="post" class="form-content">
 
-    <label for="descrizione">Descrizione:</label>
-    <textarea id="descrizione" th:field="*{descrizione}" rows="4"></textarea>
+            <!-- TITOLO -->
+            <div class="form-group">
+                <label for="titolo">Titolo</label>
+                <input type="text" id="titolo" th:field="*{titolo}" required />
+            </div>
 
-    <label for="procedimento">Procedimento:</label>
-    <textarea id="procedimento" th:field="*{procedimento}" rows="6"></textarea>
+            <!-- DESCRIZIONE -->
+            <div class="form-group">
+                <label for="descrizione">Descrizione</label>
+                <textarea id="descrizione" th:field="*{descrizione}" rows="4"></textarea>
+            </div>
 
-    <label for="tempo">Tempo (minuti):</label>
-    <input type="number" id="tempo" th:field="*{tempo}" min="1" />
+            <!-- PROCEDIMENTO -->
+            <div class="form-group">
+                <label for="procedimento">Procedimento</label>
+                <textarea id="procedimento" th:field="*{procedimento}" rows="6"></textarea>
+            </div>
 
-    <label for="difficolta">Difficoltà:</label>
-    <select id="difficolta" th:field="*{difficolta}">
-        <option value="FACILE">Facile</option>
-        <option value="MEDIA">Media</option>
-        <option value="DIFFICILE">Difficile</option>
-    </select>
+            <!-- TEMPO -->
+            <div class="form-group">
+                <label for="tempo">Tempo (minuti)</label>
+                <input type="number" id="tempo" th:field="*{tempo}" min="1" />
+            </div>
 
-    <label for="categoria">Categoria:</label>
-    <input type="text" id="categoria" th:field="*{categoria}" />
+            <!-- DIFFICOLTÀ -->
+            <div class="form-group">
+                <label for="difficolta">Difficoltà</label>
+                <select id="difficolta" th:field="*{difficolta}">
+                    <option value="FACILE">Facile</option>
+                    <option value="MEDIA">Media</option>
+                    <option value="DIFFICILE">Difficile</option>
+                </select>
+            </div>
 
-	<h3>Ingredienti</h3>
+            <!-- CATEGORIA -->
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <input type="text" id="categoria" th:field="*{categoria}" />
+            </div>
 
-	<div id="ingredienti-container">
-	    <div th:each="ing, iter : ${ricetta.ingredienti}" class="ingrediente-item">
-	        
-	        <div>
-	            <label>Nome:</label>
-	            <input type="text" th:field="*{ingredienti[__${iter.index}__].nome}" />
-	        </div>
+            <!-- INGREDIENTI -->
+            <h3 class="section-title">Ingredienti</h3>
 
-	        <div>
-	            <label>Quantità:</label>
-	            <input type="number" th:field="*{ingredienti[__${iter.index}__].quantita}" />
-	        </div>
+            <div id="ingredienti-container">
+                <div th:each="ing, iter : ${ricetta.ingredienti}" class="ingrediente-item">
 
-	        <div>
-	            <label>Unità:</label>
-	            <input type="text" th:field="*{ingredienti[__${iter.index}__].unita}" />
-	        </div>
-			
-			<!--BOTTONE RIMUOVI sull'ingrediente' -->
-			<button type="button" class="remove-btn" onclick="rimuoviIngrediente(this)">Rimuovi</button>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" th:field="*{ingredienti[__${iter.index}__].nome}" />
+                    </div>
 
-	        <hr>
-	    </div>
-	</div>
+                    <div class="form-group">
+                        <label>Quantità</label>
+                        <input type="number" th:field="*{ingredienti[__${iter.index}__].quantita}" />
+                    </div>
 
+                    <div class="form-group">
+                        <label>Unità</label>
+                        <input type="text" th:field="*{ingredienti[__${iter.index}__].unita}" />
+                    </div>
 
-	<!-- Pulsante per aggiungere un nuovo ingrediente -->
-	<button type="button" onclick="aggiungiIngrediente()">Aggiungi ingrediente</button>
+                    <button type="button" class="remove-btn" onclick="rimuoviIngrediente(this)">Rimuovi</button>
 
-	
-	<script>
-	function aggiungiIngrediente() {
-	    const container = document.getElementById("ingredienti-container");
-	    const items = container.querySelectorAll(".ingrediente-item");
+                    <hr>
+                </div>
+            </div>
 
-	    const last = items[items.length - 1];
-	    const clone = last.cloneNode(true);
+            <button type="button" class="btn" onclick="aggiungiIngrediente()">Aggiungi ingrediente</button>
 
-	    clone.querySelectorAll("input").forEach(input => {
-	        input.value = "";
-	    });
+            <div class="btn-container">
+                <button type="submit" class="btn">Salva modifiche</button>
+            </div>
 
-	    container.appendChild(clone);
-	    rinumeraIngredienti();
-	}
+        </form>
 
-	function rimuoviIngrediente(button) {
-	    const item = button.closest(".ingrediente-item");
-	    item.remove();
-	    rinumeraIngredienti();
-	}
+        <a th:href="@{'/ricetta/' + ${ricetta.id}}" class="back-link">Annulla e torna alla ricetta</a>
 
-	function rinumeraIngredienti() {
-	    const items = document.querySelectorAll(".ingrediente-item");
-
-	    items.forEach((item, index) => {
-	        item.querySelectorAll("input").forEach(input => {
-
-	            if (input.name) {
-	                const base = input.name.substring(0, input.name.indexOf("["));
-	                const field = input.name.substring(input.name.indexOf("]") + 1);
-	                input.name = base + "[" + index + "]" + field;
-	            }
-
-	            if (input.id) {
-	                input.id = input.id.replace(/\d+/, index);
-	            }
-	        });
-	    });
-	}
-	</script>
+    </div>
+</div>
 
 
+<!-- SCRIPT -->
+<script>
+function aggiungiIngrediente() {
+    const container = document.getElementById("ingredienti-container");
+    const items = container.querySelectorAll(".ingrediente-item");
 
+    const last = items[items.length - 1];
+    const clone = last.cloneNode(true);
 
+    clone.querySelectorAll("input").forEach(input => {
+        input.value = "";
+    });
 
+    container.appendChild(clone);
+    rinumeraIngredienti();
+}
 
-    <button type="submit">Salva modifiche</button>
+function rimuoviIngrediente(button) {
+    const item = button.closest(".ingrediente-item");
+    item.remove();
+    rinumeraIngredienti();
+}
 
-</form>
+function rinumeraIngredienti() {
+    const items = document.querySelectorAll(".ingrediente-item");
+
+    items.forEach((item, index) => {
+        item.querySelectorAll("input").forEach(input => {
+
+            if (input.name) {
+                const base = input.name.substring(0, input.name.indexOf("["));
+                const field = input.name.substring(input.name.indexOf("]") + 1);
+                input.name = base + "[" + index + "]" + field;
+            }
+
+            if (input.id) {
+                input.id = input.id.replace(/\d+/, index);
+            }
+        });
+    });
+}
+</script>
 
 </body>
 </html>
