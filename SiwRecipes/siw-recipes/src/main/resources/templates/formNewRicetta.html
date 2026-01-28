@@ -67,41 +67,38 @@
 			<h2 class="form-title">Ingredienti</h2>
 
 			<div id="ingredienti-container">
-				
-			    <div th:each="ingrediente, iterStat : *{ingredienti}" class="ingrediente-group ingrediente-item">
-					
-					<div class="form-group">
-								        <label>Nome ingrediente</label>
-								        <input type="text"
-								               th:field="*{ingredienti[__${iterStat.index}__].nome}"
-								               placeholder="Es. Farina" required>
-								    </div>
 
-								    <div class="form-group">
-								        <label>Quantità</label>
-								        <input type="number" step="0.01"
-								               th:field="*{ingredienti[__${iterStat.index}__].quantita}"
-								               placeholder="Es. 200" required>
-								    </div>
+			    <div th:each="ingrediente, iterStat : *{ingredienti}" class="ingrediente-item">
 
-								    <div class="form-group">
-								        <label>Unità di misura</label>
-								        <input type="text"
-								               th:field="*{ingredienti[__${iterStat.index}__].unita}"
-								               placeholder="Es. g" required>
-								    </div>
+			        <div class="form-group">
+			            <label>Nome ingrediente</label>
+			            <input type="text"
+			                   th:field="*{ingredienti[__${iterStat.index}__].nome}"
+			                   placeholder="Es. Farina" required>
+			        </div>
 
-								    <hr>
-								</div>
-					    
-					</div> <!-- chiusura ingredienti-container -->
+			        <div class="form-group">
+			            <label>Quantità</label>
+			            <input type="number" step="0.01"
+			                   th:field="*{ingredienti[__${iterStat.index}__].quantita}"
+			                   placeholder="Es. 200" required>
+			        </div>
 
+			        <div class="form-group">
+			            <label>Unità di misura</label>
+			            <input type="text"
+			                   th:field="*{ingredienti[__${iterStat.index}__].unita}"
+			                   placeholder="Es. g" required>
+			        </div>
 
-			    
+			        <hr>
+			    </div>
 
-					<div class="btn-container">
-					    <button type="button" id="add-ingrediente-btn" class="btn">+ Aggiungi ingrediente</button>
-					</div>
+			</div>
+
+			<div class="btn-container">
+			    <button type="button" id="add-ingrediente-btn" class="btn">+ Aggiungi ingrediente</button>
+			</div>
 
 
 			
@@ -111,7 +108,7 @@
         </form>
 		
 		<!-- TEMPLATE NASCOSTO PER NUOVI INGREDIENTI -->
-					<div id="ingrediente-template" class="ingrediente-group" style="display:none;">
+					<div id="ingrediente-template" class="ingrediente-item" style="display:none;">
 
 					    <div class="form-group">
 					        <label>Nome ingrediente</label>
