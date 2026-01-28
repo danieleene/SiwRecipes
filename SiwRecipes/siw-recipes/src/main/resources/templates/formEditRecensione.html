@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifica Recensione</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <div class="form-card">
+
+        <h2 class="form-title">Modifica la tua recensione</h2>
+
+        <form th:action="@{'/recensione/' + ${recensione.id} + '/edit'}"
+              th:object="${recensione}"
+              method="post"
+              class="form-content">
+
+            <!-- VOTO -->
+            <div class="form-group">
+                <label for="voto">Voto (1-5)</label>
+                <input type="number" id="voto" th:field="*{voto}" min="1" max="5" required>
+
+                <!-- ANTEPRIMA STELLINE -->
+                <div id="starPreview" class="rec-stars" style="margin-top: 8px;"></div>
+            </div>
+
+            <!-- TESTO RECENSIONE -->
+            <div class="form-group">
+                <label for="testo">Testo recensione</label>
+                <textarea id="testo" th:field="*{testo}" rows="6" required></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Salva modifiche</button>
+            </div>
+
+        </form>
+
+        <a th:href="@{'/ricetta/' + ${ricetta.id}}" class="back-link">
+            Torna alla ricetta
+        </a>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT PER ANTEPRIMA STELLINE -->
+<script>
+    function updateStars() {
+        const voto = document.getElementById("voto").value;
+        const starDiv = document.getElementById("starPreview");
+
+        let stars = "";
+        for (let i = 0; i < voto; i++) {
+            stars += "⭐";
+        }
+        starDiv.innerHTML = stars;
+    }
+
+    // Aggiorna all'avvio (per mostrare le stelline della recensione esistente)
+    updateStars();
+
+    // Aggiorna ogni volta che cambia il voto
+    document.getElementById("voto").addEventListener("input", updateStars);
+</script>
+
+</body>
+</html>
