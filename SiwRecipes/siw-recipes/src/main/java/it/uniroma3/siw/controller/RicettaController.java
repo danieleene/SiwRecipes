@@ -127,11 +127,17 @@ public class RicettaController {
 	  public String deleteRicetta(@PathVariable("id") Long id, Model model) {
 	      try {
 	          this.ricettaService.deleteRicetta(id);
-	          return "redirect:/index"; // torna alla home
+	          return "redirect:/eliminazioneSuccesso"; //una pagina che informa l'utente dell'avvenuta rimozione
 	      } catch (RuntimeException e) {
 	          model.addAttribute("messaggioErrore", e.getMessage());
 	          return "accessoNegato.html";
 	      }
+	  }
+
+	//Rotta verso la pagina con messaggio di avvenuta cancellazione
+	  @GetMapping("/eliminazioneSuccesso")
+	  public String eliminazioneSuccesso() {
+	      return "eliminazioneSuccesso.html";
 	  }
 
 	@GetMapping("/ricetta/{id}/edit")
@@ -225,6 +231,7 @@ public class RicettaController {
 	  }
   
 }
+
 
 
 
