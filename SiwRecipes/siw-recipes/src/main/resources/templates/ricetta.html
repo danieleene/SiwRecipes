@@ -107,6 +107,13 @@
 	            Cancella recensione
 	        </a>
 
+			<!-- Link MODIFICA recensione: visibile solo all'autore -->
+			<a th:if="${utenteLoggatoId == rec.autore.id and utenteLoggato.stato != 'BANNATO'}"
+			   th:href="@{'/recensione/' + ${rec.id} + '/edit'}"
+			   class="edit-review-button">
+			    Modifica recensione
+			</a>
+
 	        <hr>
 	    </div>
 
