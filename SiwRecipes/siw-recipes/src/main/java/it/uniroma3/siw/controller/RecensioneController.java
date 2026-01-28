@@ -134,5 +134,71 @@ public class RecensioneController {
 	      return "redirect:/ricetta/" + ricetta.getId();
 	  }
 
+
+
+
+	@GetMapping("/recensione/{id}/edit")
+	  public String formEditRecensione(@PathVariable("id") Long id,
+	                                   Model model) {
+
+	      // Recupero recensione
+	      Recensione recensione = recensioneService.getRecensioneById(id);
+	      if (recensione == null)
+	          return "redirect:/";
+
+	      // Utente loggato?
+	      Credenziali credenziali = credenzialiService.getCurrentCredentials();
+	      if (credenziali == null)
+	          return "redirect:/login";
+
+	      Utente utenteLoggato = credenziali.getUtente();
+
+	      // Utente bannato?
+	      if (utenteLoggato.getStato().equals("BANNATO"))
+	          return "redirect:/accessDenied";
+
+	      // È il proprietario?
+	      if (!recensione.getAutore().getId().equals(utenteLoggato.getId()))
+	          return "redirect:/accessDenied";
+
+	      // Passo al form
+	      model.addAttribute("recensione", recensione);
+	      model.addAttribute("ricetta", recensione.getRicetta());
+
+	      return "formEditRecensione.html";
+	  }
+
+	  
+	  
+	  @PostMapping("/recensione/{id}/edit")
+	  public String editRecensione(@PathVariable("id") Long id,
+	                               @ModelAttribute("recensione") Recensione recensioneModificata) {
+
+	      Recensione recensione = recensioneService.getRecensioneById(id);
+	      if (recensione == null)
+	          return "redirect:/";
+
+	      Credenziali credenziali = credenzialiService.getCurrentCredentials();
+	      if (credenziali == null)
+	          return "redirect:/login";
+
+	      Utente utenteLoggato = credenziali.getUtente();
+
+	      if (utenteLoggato.getStato().equals("BANNATO"))
+	          return "redirect:/accessDenied";
+
+	      if (!recensione.getAutore().getId().equals(utenteLoggato.getId()))
+	          return "redirect:/accessDenied";
+
+	      // Aggiorno SOLO i campi modificabili
+	      recensione.setTesto(recensioneModificata.getTesto());
+	      recensione.setVoto(recensioneModificata.getVoto());
+	      recensione.setData(new Date()); // aggiorniamo la data della modifica
+
+	      recensioneService.saveRecensione(recensione);
+
+	      return "redirect:/ricetta/" + recensione.getRicetta().getId();
+	  }
+
 	
 }
