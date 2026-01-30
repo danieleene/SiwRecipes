@@ -21,8 +21,19 @@ public class UtenteController {
 	
 	  @GetMapping("/utente/{id}")
 	  public String getUtente(@PathVariable("id") Long id, Model model) {
-	    model.addAttribute("utente", this.utenteService.getUtenteById(id));
-	    return "utente.html";
+
+		  Utente utenteVisualizzato = this.utenteService.getUtenteById(id);
+		  
+		  //verifica delle credenziali
+		  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		  Credenziali cred = (Credenziali) auth.getPrincipal();
+		  Utente utenteLoggato = cred.getUtente();
+		  
+		  model.addAttribute("utente", utenteVisualizzato); 
+		  model.addAttribute("email", utenteVisualizzato.getCredenziali().getEmail()); 
+		  model.addAttribute("utenteLoggato", utenteLoggato);
+		  
+	    return "profilo.html";
 	  }
 
 	  @GetMapping("/utente")
@@ -34,12 +45,14 @@ public class UtenteController {
 	@GetMapping("/profilo")
 	  public String mostraProfilo(Model model) {
 
+		  //verifica credenziali
 	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      Credenziali cred = (Credenziali) auth.getPrincipal();
 	      Utente utente = cred.getUtente();
 
 	      model.addAttribute("utente", utente);
 	      model.addAttribute("email", cred.getEmail());
+		  model.addAttribute("utenteLoggato", utente);
 
 	      return "profilo.html";
 	  }
