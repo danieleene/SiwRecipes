@@ -68,6 +68,13 @@
 	            <h4 th:text="${ricetta.titolo}">Titolo ricetta</h4>
 	            <p th:text="${ricetta.descrizione}">Descrizione breve</p>
 	        </a>
+
+			<div class="recipe-info">
+			    <span class="tempo" th:text="${ricetta.tempo + ' min'}">30 min</span>
+			    <span class="categoria" th:text="${ricetta.categoria}">PRIMI</span>
+				<!--fallback statico ma Springboot sostituisce correttamente-->
+			</div>
+			
 	    </div>
 	</div>
 
