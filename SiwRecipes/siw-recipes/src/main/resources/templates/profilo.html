@@ -27,7 +27,12 @@
         <p class="error">Non puoi modificare il profilo perché sei bannato.</p>
     </div>
 
-    <a class="btn" th:href="@{/profilo/modifica}">Modifica profilo</a>
+   <!-- "Modifica" visibile solo all'utente stesso(loggato & ATTIVO)-->
+	<a class="btn"
+	   th:if="${utenteLoggato.id == utente.id}"
+	   th:href="@{/profilo/modifica}">
+	   Modifica profilo
+	</a>
 
     <br><br>
 	<a class="btn-secondary" th:href="@{/}">Torna alla Home</a>
