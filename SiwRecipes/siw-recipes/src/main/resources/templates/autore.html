@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${autore.nome} + ' ' + ${autore.cognome}">Autore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="recipe-detail-container">
+
+    <h1 th:text="${autore.nome} + ' ' + ${autore.cognome}">Nome Cognome</h1>
+
+    <p><strong>Stato:</strong>
+        <span th:text="${autore.stato}">ATTIVO</span>
+    </p>
+
+    <p><strong>Email:</strong>
+        <span th:text="${autore.credenziali.email}">email</span>
+    </p>
+
+    <hr>
+
+    <h2>Ricette pubblicate</h2>
+
+    <div th:if="${ricette != null and #lists.isEmpty(ricette) == false}">
+        <ul>
+            <li th:each="r : ${ricette}">
+                <a th:href="@{'/ricetta/' + ${r.id}}"
+                   th:text="${r.titolo}">
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div th:if="${ricette == null or #lists.isEmpty(ricette)}">
+        <p>Nessuna ricetta pubblicata.</p>
+    </div>
+
+    <a th:href="@{/}" class="back-home-link">Torna alla Home</a>
+
+</div>
+
+</body>
+</html>
