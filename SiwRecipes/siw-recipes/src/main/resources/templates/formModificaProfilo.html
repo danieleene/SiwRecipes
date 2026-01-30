@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifica Profilo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Modifica Profilo</h1>
+
+    <form th:action="@{/profilo/modifica}" th:object="${utente}" method="post" class="form-card">
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" th:field="*{cognome}" required>
+
+        <button type="submit" class="btn">Salva modifiche</button>
+    </form>
+
+    <a class="btn-secondary" th:href="@{/profilo}">Annulla</a>
+
+</div>
+
+</body>
+</html>
