@@ -46,7 +46,7 @@
 
     <p><strong>Categoria:</strong> <span th:text="${ricetta.categoria}">Categoria</span></p>
 
-    <p><strong>Autore:</strong> <span th:text="${ricetta.autore.nome}">Autore</span></p>
+    <p><strong>Autore:</strong> <a th:href="@{'/autore/' + ${ricetta.autore.id}}" th:text="${ricetta.autore.nome}">Autore</a></p>
 
     <p><strong>Data:</strong> 
        <span th:text="${#dates.format(ricetta.data, 'dd/MM/yyyy')}">Data</span>
