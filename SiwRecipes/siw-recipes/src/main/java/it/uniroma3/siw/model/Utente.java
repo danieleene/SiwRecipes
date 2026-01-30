@@ -32,7 +32,7 @@ public class Utente {
 	private List<Recensione> recensioni;
 	
 	
-	@OneToMany
+	@OneToMany(mappedBy = "autore")
 	private List<Ricetta> ricette;
 
 	@OneToOne(mappedBy = "utente")
@@ -72,6 +72,13 @@ public class Utente {
 	public void setCredenziali(Credenziali credenziali) {
 		this.credenziali = credenziali;
 	}
+
+	public List<Ricetta> getRicette() {
+		return ricette;
+	}
+	public void setRicette(List<Ricetta> ricette) {
+		this.ricette = ricette;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -93,6 +100,7 @@ public class Utente {
 	}
 		
 }
+
 
 
 
