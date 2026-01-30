@@ -21,7 +21,7 @@ public class AutoreController {
         Utente autore = utenteService.getUtenteById(id);
 
         if (autore == null) {
-            return "notFound.html"; // opzionale DA IMPLEMENTARE!
+            return "notFound.html"; 
         }
 
         model.addAttribute("autore", autore);
