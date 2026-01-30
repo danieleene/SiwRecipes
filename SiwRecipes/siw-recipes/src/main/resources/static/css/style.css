@@ -375,3 +375,37 @@ table button {
 table button:hover {
     background-color: #45a049;
 }
+
+
+.notfound-container {
+    text-align: center;
+    margin-top: 80px;
+}
+
+.notfound-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #c0392b; /* rosso */
+}
+
+.notfound-text {
+    font-size: 1.3rem;
+    margin-top: 20px;
+    color: #555;
+}
+
+.home-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #27ae60; /* verde */
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none; /* nessun contorno */
+}
+
+.home-btn:hover {
+    background-color: #1e8449; /* verde più scuro */
+}
