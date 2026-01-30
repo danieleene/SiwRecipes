@@ -6,22 +6,33 @@
 </head>
 <body>
 
-<div class="container">
+<div class="page-wrapper">
 
-    <h1>Modifica Profilo</h1>
+    <div class="form-card">
 
-    <form th:action="@{/profilo/modifica}" th:object="${utente}" method="post" class="form-card">
+        <h1 class="form-title">Modifica Profilo</h1>
 
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" th:field="*{nome}" required>
+        <form th:action="@{/profilo/modifica}" th:object="${utente}" method="post" class="form-content">
 
-        <label for="cognome">Cognome</label>
-        <input type="text" id="cognome" th:field="*{cognome}" required>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
 
-        <button type="submit" class="btn">Salva modifiche</button>
-    </form>
+            <div class="form-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" id="cognome" th:field="*{cognome}" required>
+            </div>
 
-    <a class="btn-secondary" th:href="@{/profilo}">Annulla</a>
+            <div class="btn-container">
+                <button type="submit" class="btn">Salva modifiche</button>
+            </div>
+
+        </form>
+
+        <a th:href="@{/profilo}" class="back-link">Annulla</a>
+
+    </div>
 
 </div>
 
