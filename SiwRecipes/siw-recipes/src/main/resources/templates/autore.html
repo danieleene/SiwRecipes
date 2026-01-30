@@ -23,19 +23,29 @@
 
     <h2>Ricette pubblicate</h2>
 
-    <div th:if="${ricette != null and #lists.isEmpty(ricette) == false}">
-        <ul>
-            <li th:each="r : ${ricette}">
-                <a th:href="@{'/ricetta/' + ${r.id}}"
-                   th:text="${r.titolo}">
-                </a>
-            </li>
-        </ul>
-    </div>
+    <div th:if="${ricette != null and #lists.isEmpty(ricette) == false}" class="recipes-preview">
 
-    <div th:if="${ricette == null or #lists.isEmpty(ricette)}">
-        <p>Nessuna ricetta pubblicata.</p>
-    </div>
+	    <div th:each="ricetta : ${ricette}" class="recipe-card">
+	        <a th:href="@{'/ricetta/' + ${ricetta.id}}">
+
+	            <!-- IMMAGINE DELLA RICETTA -->
+	            <div class="ricetta-immagine" th:if="${ricetta.nomeImmagine != null}">
+	                <img th:src="@{'/images/' + ${ricetta.nomeImmagine}}"
+	                     alt="Foto ricetta"
+	                     style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px;">
+	            </div>
+
+	            <h4 th:text="${ricetta.titolo}">Titolo ricetta</h4>
+	            <p th:text="${ricetta.descrizione}">Descrizione breve</p>
+
+	        </a>
+	    </div>
+
+	</div>
+
+	<div th:if="${ricette == null or #lists.isEmpty(ricette)}">
+	    <p>Nessuna ricetta pubblicata.</p>
+	</div>
 
     <a th:href="@{/}" class="back-home-link">Torna alla Home</a>
 
