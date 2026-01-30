@@ -34,7 +34,14 @@
 
         <tbody>
             <tr th:each="utente : ${utenti}">
-                <td th:text="${utente.id}"></td>
+
+                <td>
+				    <a th:href="@{'/utente/' + ${utente.id}}"
+				       class="link-id">
+				       <span th:text="${utente.id}"></span>
+				    </a>
+				</td>
+                
                 <td th:text="${utente.credenziali.email}"></td>
                 <td th:text="${utente.nome}"></td>
                 <td th:text="${utente.cognome}"></td>
