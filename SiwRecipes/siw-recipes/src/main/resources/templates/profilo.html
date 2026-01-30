@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Il tuo profilo</h1>
+
+    <div class="card">
+        <p><strong>Nome:</strong> <span th:text="${utente.nome}"></span></p>
+        <p><strong>Cognome:</strong> <span th:text="${utente.cognome}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${email}"></span></p>
+
+        <p>
+            <strong>Stato account:</strong>
+            <span th:text="${utente.stato}"
+                  th:classappend="${utente.stato == 'BANNATO'} ? 'badge-red' : 'badge-green'">
+            </span>
+        </p>
+    </div>
+
+    <div th:if="${param.errore}">
+        <p class="error">Non puoi modificare il profilo perché sei bannato.</p>
+    </div>
+
+    <a class="btn" th:href="@{/profilo/modifica}">Modifica profilo</a>
+
+</div>
+
+</body>
+</html>
