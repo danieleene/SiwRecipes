@@ -24,21 +24,25 @@
 
     <p th:text="${ricetta.descrizione}">Descrizione breve</p>
 	
-	<p class="section-title">Ingredienti</p>
+	<div class="recipe-columns">
 
-	<ul class="ingredienti-list">
-	    <li th:each="ing : ${ricetta.ingredienti}">
-	        <strong th:text="${ing.nome}"></strong>
-	        :
-	        <span th:text="${ing.quantita}"></span>
-	        <span th:text="${ing.unita}"></span>
-	    </li>
-	</ul>
+	    <div class="colonna-ingredienti">
+	        <p class="section-title">Ingredienti</p>
+	        <ul class="ingredienti-list">
+	            <li th:each="ing : ${ricetta.ingredienti}">
+	                <strong th:text="${ing.nome}"></strong> :
+	                <span th:text="${ing.quantita}"></span>
+	                <span th:text="${ing.unita}"></span>
+	            </li>
+	        </ul>
+	    </div>
 
-	
+	    <div class="colonna-procedimento">
+	        <p class="section-title">Procedimento</p>
+	        <p th:text="${ricetta.procedimento}"></p>
+	    </div>
 
-    <p class="section-title">Procedimento</p>
-    <p th:text="${ricetta.procedimento}">Testo procedimento</p>
+	</div>
 
     <p><strong>Tempo:</strong> <span th:text="${ricetta.tempo}">Tempo</span> minuti</p>
 
