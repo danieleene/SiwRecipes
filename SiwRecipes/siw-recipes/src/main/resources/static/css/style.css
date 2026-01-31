@@ -434,3 +434,27 @@ table button:hover {
     font-weight: bold;
     color: #4CAF50;
 }
+
+.recipe-columns {
+    display: flex;
+    gap: 40px;
+    margin-top: 25px;
+}
+
+/* Colonne */
+.colonna-ingredienti,
+.colonna-procedimento {
+    flex: 1;
+}
+
+/* Per evitare che il testo del procedimento diventi troppo largo */
+.colonna-procedimento p {
+    text-align: justify;
+}
+
+/* Responsive: su schermi piccoli torna a una colonna */
+@media (max-width: 768px) {
+    .recipe-columns {
+        flex-direction: column;
+    }
+}
