@@ -81,7 +81,9 @@
 	  
 	<!-- Pulsante ELIMINA visibile solo ad ADMIN o autore -->
 	<div th:if="${ruolo == 'ADMIN' or utenteLoggatoId == ricetta.autore.id}">
-	    <a th:href="@{'/ricetta/delete/' + ${ricetta.id}}" class="delete-button">
+	    <a th:href="@{'/ricetta/delete/' + ${ricetta.id}}" 
+		th:onclick="|return confirm('Sei sicuro di voler eliminare questa ricetta?');|"
+		class="delete-button">
 	        Elimina ricetta
 	    </a>
 	</div>
