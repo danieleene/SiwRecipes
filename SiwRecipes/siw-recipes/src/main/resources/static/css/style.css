@@ -81,6 +81,14 @@ nav a {
     -webkit-box-orient: vertical;
 }
 
+.recipe-card h4 {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 10px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* --- FORM CONTAINER --- */
 .form-container {
