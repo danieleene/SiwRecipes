@@ -24,6 +24,18 @@
                 <input type="text" id="cognome" th:field="*{cognome}" required>
             </div>
 
+            <!-- Email (da Credenziali) -->
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" id="email" th:field="${credenziali.email}" required>
+			</div>
+			
+			<!-- Password (da Credenziali) -->
+			<div class="form-group">
+				<label for="password">Nuova Password</label>
+				<input type="password" id="password" th:field="${credenziali.password}">
+			</div>
+
             <div class="btn-container">
                 <button type="submit" class="btn">Salva modifiche</button>
             </div>
