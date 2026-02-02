@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.UtenteService;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 public class UtenteController {
 	
 	@Autowired UtenteService utenteService;
+
+	@Autowired CredenzialiService credenzialiService;
+	
+	@Autowired private PasswordEncoder passwordEncoder;
+
 	
 	  @GetMapping("/utente/{id}")
 	  public String getUtente(@PathVariable("id") Long id, Model model) {
@@ -74,13 +82,16 @@ public class UtenteController {
 	      }
 
 	      model.addAttribute("utente", utente);
+		  model.addAttribute("credenziali", cred);
+		  
 	      return "formModificaProfilo.html";
 	  }
 
 	  
 	  
 	  @PostMapping("/profilo/modifica")
-	  public String salvaModifiche(@ModelAttribute("utente") Utente utenteModificato) {
+	  public String salvaModifiche(@ModelAttribute("utente") Utente utenteModificato,
+								  @ModelAttribute("credenziali") Credenziali credModificate) {
 
 	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      Credenziali cred = (Credenziali) auth.getPrincipal();
@@ -96,6 +107,15 @@ public class UtenteController {
 	      utente.setCognome(utenteModificato.getCognome());
 
 	      utenteService.saveUtente(utente);
+
+		  // --- Aggiorna Credenziali ---
+	      cred.setEmail(credModificate.getEmail());
+	      if (credModificate.getPassword() != null && !credModificate.getPassword().isBlank()) {
+	    	  cred.setPassword(passwordEncoder.encode(credModificate.getPassword()));
+	      }
+
+		  credenzialiService.saveCredenziali(cred);
+
 
 	      return "redirect:/profilo";
 	  }
