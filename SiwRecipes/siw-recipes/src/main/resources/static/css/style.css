@@ -317,6 +317,13 @@ a {
     box-shadow: 0 6px 18px rgba(0,0,0,0.22);
 }
 
+
+.autore-link {
+    color: #4CAF50;
+    text-decoration: underline;
+    font-weight: normal;
+}
+
 .delete-review-button {
 	display: block;
 	text-align: right;
