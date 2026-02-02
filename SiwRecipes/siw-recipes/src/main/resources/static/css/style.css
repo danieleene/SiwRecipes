@@ -34,14 +34,53 @@ nav a {
 }
 
 .recipe-card {
-    display: inline-block;
+    
     background: white;
-    padding: 20px;
+    padding: 15px;
     margin: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     width: 250px;
+	height: 350px; /* altezza fissa */
+	box-sizing: border-box;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative;
 }
+
+.recipe-card img {
+    width: 100%;
+    height: 150px; /* altezza fissa */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.recipes-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+.recipe-card p {
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.recipe-card p:nth-of-type(1) { /* la descrizione */
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* massimo 3 righe */
+    -webkit-box-orient: vertical;
+}
+
 
 /* --- FORM CONTAINER --- */
 .form-container {
@@ -85,12 +124,15 @@ a {
     text-decoration: none;
     color: #4CAF50;
 }
+
+
 /* --- FORM RICETTE: WRAPPER --- */
 .page-wrapper {
     display: flex;
     justify-content: center;
     padding: 40px 0;
 }
+
 
 /* --- FORM RECENSIONE:  --- */
 .form-card {
@@ -129,6 +171,8 @@ a {
     to   { opacity: 1; transform: translateY(0); }
 }
 
+
+
 /* --- CONTENUTO DEL FORM --- */
 .form-content {
     width: 100%;
@@ -158,6 +202,7 @@ a {
     border-radius: 6px;
     box-sizing: border-box;
 }
+
 
 
 /* --- BOTTONE --- */
@@ -232,7 +277,6 @@ a {
 }
 
 
-
 .delete-button {
     display: inline-block;
     padding: 10px 15px;
@@ -246,7 +290,6 @@ a {
 .delete-button:hover {
     background-color: #e74c3c;
 }
-
 .ricetta-immagine {
     display: flex;
     justify-content: center;
@@ -272,6 +315,7 @@ a {
     color: red;
     font-size: 0.9em;
     text-decoration: none;
+	
 }
 
 .delete-review-button:hover {
@@ -295,6 +339,7 @@ a {
     background-color: #d4ac0d; 
 }
 
+
 .nav-link {
     color: white;
     margin-left: 20px;
@@ -314,6 +359,7 @@ a {
     margin-bottom: 6px;
 }
 
+
 /* --- STILE PER LE STELLINE --- */
 
 .star-preview {
@@ -328,6 +374,7 @@ a {
     color: gold;
     margin: 0;
 }
+
 
 /* --- TABELLA GESTIONE UTENTI --- */
 table {
@@ -410,10 +457,8 @@ table button:hover {
     background-color: #1e8449; /* verde più scuro */
 }
 
-.recipe-card {
-    position: relative; /* necessario per posizionare il footer */
-    padding-bottom: 50px; /* spazio per il footer */
-}
+
+
 
 .recipe-info {
     position: absolute;
@@ -434,6 +479,9 @@ table button:hover {
     font-weight: bold;
     color: #4CAF50;
 }
+
+
+
 
 .recipe-columns {
     display: flex;
