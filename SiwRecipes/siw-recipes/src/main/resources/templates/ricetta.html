@@ -109,6 +109,7 @@
 	        <!-- Link ELIMINA recensione: visibile solo ad autore o admin -->
 	        <a th:if="${(ruolo == 'ADMIN') or (utenteLoggatoId == rec.autore.id and utenteLoggato.stato != 'BANNATO')}"
 	           th:href="@{'/recensione/' + ${rec.id} + '/delete'}"
+			   th:onclick="|return confirm('Sei sicuro di voler eliminare questa recensione?');|"
 	           class="delete-review-button">
 	            Cancella recensione
 	        </a>
