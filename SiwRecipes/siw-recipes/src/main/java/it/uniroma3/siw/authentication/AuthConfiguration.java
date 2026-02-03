@@ -27,6 +27,7 @@ public class AuthConfiguration {
             .userDetailsService(userDetailsService)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/index", "/css/**", "/images/**", "/login", "/register", "/ricetta/**", "/autore/**").permitAll()
+				.requestMatchers("/ricette/*/preferiti/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                    
                 .anyRequest().authenticated()
