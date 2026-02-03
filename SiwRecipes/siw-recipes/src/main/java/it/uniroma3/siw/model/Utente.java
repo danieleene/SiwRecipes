@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +39,9 @@ public class Utente {
 
 	@OneToOne(mappedBy = "utente")
 	private Credenziali credenziali;
-	
+
+	@ManyToMany
+	private List<Ricetta> ricettePreferite = new ArrayList<>();
 	
 	//Metodi Getter e Setter
 	
@@ -79,6 +83,13 @@ public class Utente {
 	public void setRicette(List<Ricetta> ricette) {
 		this.ricette = ricette;
 	}
+
+	public List<Ricetta> getRicettePreferite() {
+		return ricettePreferite;
+	}
+	public void setRicettePreferite(List<Ricetta> ricettePreferite) {
+		this.ricettePreferite = ricettePreferite;
+	}
 	
 	//Metodi equals e hashCode
 	
@@ -100,7 +111,6 @@ public class Utente {
 	}
 		
 }
-
 
 
 
