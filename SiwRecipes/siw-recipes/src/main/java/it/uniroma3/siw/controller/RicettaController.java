@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-//import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Ingrediente;
@@ -18,6 +18,7 @@ import it.uniroma3.siw.model.Ricetta;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.RicettaService;
+import it.uniroma3.siw.service.UtenteService;
 
 @Controller
 public class RicettaController {
@@ -25,6 +26,8 @@ public class RicettaController {
   @Autowired RicettaService ricettaService;
 
 @Autowired CredenzialiService credenzialiService;
+
+	@Autowired UtenteService utenteService;
 
 	  //Risponde con una pagina che contiene la form per inserire i dati di una nuova ricetta
 	  @GetMapping("/formNewRicetta")
@@ -100,10 +103,15 @@ public class RicettaController {
 
       //Risponde con una pagina che contiene i dettagli della ricetta	  
 	  @GetMapping("/ricetta/{id}")
-	  public String getRicetta(@PathVariable("id") Long id, Model model) {
+	  public String getRicetta(@PathVariable("id") Long id,
+							   @RequestParam(required = false) String from,
+							   Model model) {
 		  
 	    Ricetta ricetta = this.ricettaService.getRicettaById(id);
 		  model.addAttribute("ricetta", ricetta);
+
+		  // Passiamo al template da dove siamo arrivati
+		  model.addAttribute("from", from);
 		  
 		// Recupero credenziali utente loggato
 		  Credenziali cred = credenzialiService.getCurrentCredentials();
@@ -229,8 +237,35 @@ public class RicettaController {
 
 	      return "redirect:/ricetta/" + id;
 	  }
+
+	@PostMapping("/ricette/{id}/preferiti/add")
+	  public String aggiungiPreferito(@PathVariable("id") Long idRicetta) {
+
+	      
+	      
+	      Ricetta ricetta = ricettaService.getRicettaById(idRicetta);
+	      Credenziali cred = credenzialiService.getCurrentCredentials();
+	      Long idUtente = cred.getUtente().getId();
+	      utenteService.aggiungiPreferito(idUtente, ricetta);
+
+	      return "redirect:/ricetta/" + idRicetta;
+	  }
+
+	  @PostMapping("/ricette/{id}/preferiti/remove")
+	  public String rimuoviPreferito(@PathVariable("id") Long idRicetta) {
+
+		  Ricetta ricetta = ricettaService.getRicettaById(idRicetta);
+
+		  Credenziali cred = credenzialiService.getCurrentCredentials();
+		  Long idUtente = cred.getUtente().getId();
+		  
+	      utenteService.rimuoviPreferito(idUtente, ricetta);
+
+	      return "redirect:/ricetta/" + idRicetta;
+	  }
   
 }
+
 
 
 
