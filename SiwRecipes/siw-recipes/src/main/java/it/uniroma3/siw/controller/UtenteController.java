@@ -53,14 +53,19 @@ public class UtenteController {
 	@GetMapping("/profilo")
 	  public String mostraProfilo(Model model) {
 
-		  //verifica credenziali
+		  //Recupero credenziali
 	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      Credenziali cred = (Credenziali) auth.getPrincipal();
-	      Utente utente = cred.getUtente();
+
+		  Long idUtente = cred.getUtente().getId();
+	      
+	      Utente utente = utenteService.getUtenteById(idUtente);
 
 	      model.addAttribute("utente", utente);
 	      model.addAttribute("email", cred.getEmail());
 		  model.addAttribute("utenteLoggato", utente);
+
+		  model.addAttribute("ricettePreferite", utente.getRicettePreferite());
 
 	      return "profilo.html";
 	  }
