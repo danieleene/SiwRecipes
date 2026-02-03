@@ -34,6 +34,37 @@
 	   Modifica profilo
 	</a>
 
+	<h2 style="margin-top: 80px;">Le tue ricette preferite</h2>
+
+
+	<div th:if="${#lists.isEmpty(ricettePreferite)}">
+	    <p>Non hai ancora aggiunto nessuna ricetta ai preferiti.</p>
+	</div>
+
+	<div th:if="${!#lists.isEmpty(ricettePreferite)}" class="recipes-preview">
+
+	    <div th:each="r : ${ricettePreferite}" class="recipe-card">
+
+	        <a th:href="@{'/ricetta/' + ${r.id} + '?from=profilo'}">
+
+	            <div class="ricetta-immagine" th:if="${r.nomeImmagine != null}">
+	                <img th:src="@{'/images/' + ${r.nomeImmagine}}" alt="Foto ricetta">
+	            </div>
+
+	            <h4 th:text="${r.titolo}"></h4>
+	            <p th:text="${r.descrizione}"></p>
+
+	        </a>
+
+	        <div class="recipe-info">
+	            <span class="tempo" th:text="${r.tempo + ' min'}"></span>
+	            <span class="categoria" th:text="${r.categoria}"></span>
+	        </div>
+
+	    </div>
+
+	</div>
+
     <br><br>
 	<a class="btn-secondary" th:href="@{/}">Torna alla Home</a>
     
