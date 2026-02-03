@@ -9,10 +9,14 @@
 <body>
   <div class="recipe-detail-container">
 
+	  <!-- Torna al profilo (solo se arrivi dal profilo) -->
+	<a th:if="${from == 'profilo'}"
+	   th:href="@{/profilo}"
+	   class="back-profile-link">
+	    ← Torna al profilo
+	</a>
+
     <h1 th:text="${ricetta.titolo}">Titolo</h1>
-
-
-	
 
 	<div class="ricetta-immagine" th:if="${ricetta.nomeImmagine != null}">
 	    <img th:src="@{'/images/' + ${ricetta.nomeImmagine}}"
@@ -65,6 +69,29 @@
 			Aggiungi recensione
 			</a>
 	    </div>
+
+	  <!-- Pulsanti Preferiti -->
+			<div th:if="${utenteLoggato != null and utenteLoggato.stato != 'BANNATO'}" class="preferiti-container">
+
+			    <!-- Se NON è nei preferiti -->
+			    <form th:if="${!utenteLoggato.ricettePreferite.contains(ricetta)}"
+			          th:action="@{'/ricette/' + ${ricetta.id} + '/preferiti/add'}"
+			          method="post">
+			        <button type="submit" class="btn-like">
+			            👍 Aggiungi ai preferiti
+			        </button>
+			    </form>
+
+			    <!-- Se è già nei preferiti -->
+			    <form th:if="${utenteLoggato.ricettePreferite.contains(ricetta)}"
+			          th:action="@{'/ricette/' + ${ricetta.id} + '/preferiti/remove'}"
+			          method="post">
+			        <button type="submit" class="btn-unlike">
+			            💔 Rimuovi dai preferiti
+			        </button>
+			    </form>
+
+			</div>
 
 
 	  <!-- Pulsante MODIFICA visibile solo ad ADMIN o autore -->
