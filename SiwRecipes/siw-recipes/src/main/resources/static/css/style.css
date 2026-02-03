@@ -569,3 +569,16 @@ table button:hover {
     color: #000;
     text-decoration: none;
 }
+
+
+
+.profile-link-recipes {
+    font-size: 18px;
+    color: #4CAF50;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.profile-link-recipes:hover {
+    text-decoration: underline;
+}
