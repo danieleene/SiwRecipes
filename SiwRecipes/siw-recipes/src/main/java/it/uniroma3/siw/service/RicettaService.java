@@ -95,8 +95,13 @@ public class RicettaService {
 	public Ricetta saveRicetta(Ricetta ricetta) {
 	    return this.ricettaRepository.save(ricetta);
 	}
-  
+
+	//Per cercare le ricette per Categoria
+	public List<Ricetta> getRicetteByCategoria(String categoria) {
+	    return this.ricettaRepository.findByCategoriaIgnoreCase(categoria);
+	}
 }
+
 
 
 
