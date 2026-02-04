@@ -582,3 +582,32 @@ table button:hover {
 .profile-link-recipes:hover {
     text-decoration: underline;
 }
+
+
+.search-bar {
+    width: 350px;
+    margin: 20px auto;
+    display: flex;
+    gap: 4px;
+}
+
+
+
+/* Stile del bottone verde */
+.search-bar button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+	padding: 18px , 10px ;
+	
+}
+
+.search-bar input,
+.search-bar button {
+    flex: 1;
+    height: 36px;           /* stessa altezza */
+    font-size: 14px;
+    box-sizing: border-box; /* evita differenze interne */
+}
