@@ -16,7 +16,8 @@ public class AutoreController {
     private UtenteService utenteService;
 
     @GetMapping("/autore/{id}")
-    public String getAutore(@PathVariable("id") Long id, Model model) {
+    public String getAutore(@PathVariable("id") Long id, 
+                            @RequestParam(required = false) String from, Model model) {
 
         Utente autore = utenteService.getUtenteById(id);
 
@@ -26,6 +27,8 @@ public class AutoreController {
 
         model.addAttribute("autore", autore);
         model.addAttribute("ricette", autore.getRicette());
+
+        model.addAttribute("from",from);
 
         return "autore.html";
     }
