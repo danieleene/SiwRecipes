@@ -158,6 +158,16 @@
     });
 </script>
 
+<script>
+    // elimina ingrediente
+    document.addEventListener("click", function(e) {
+        if (e.target.classList.contains("delete-ingrediente")) {
+            e.preventDefault();
+            const item = e.target.closest(".ingrediente-item");
+            item.remove();
+        }
+    });
+</script>
 
 </body>
 </html>
