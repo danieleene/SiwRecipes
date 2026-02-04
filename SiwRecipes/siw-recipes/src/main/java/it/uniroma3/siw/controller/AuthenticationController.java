@@ -87,6 +87,33 @@ public class AuthenticationController {
 
 	    return "index.html";
 	}
-	
+
+	@GetMapping("/ricette/categoria")
+	public String ricettePerCategoria(String nome, Model model) {
+
+	    // Recupero autenticazione (stessa logica della homepage)
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication != null && authentication.isAuthenticated()
+	            && !(authentication instanceof AnonymousAuthenticationToken)) {
+
+	        Credenziali cred = (Credenziali) authentication.getPrincipal();
+	        model.addAttribute("email", cred.getEmail());
+	        model.addAttribute("ruolo", cred.getRuolo());
+	    }
+
+	    // Ricette filtrate per categoria
+	    var ricetteFiltrate = ricettaService.getRicetteByCategoria(nome);
+
+	    model.addAttribute("ricette", ricetteFiltrate);
+	    model.addAttribute("categoriaSelezionata", nome);
+
+	    // Se non ci sono ricette → messaggio
+	    if (ricetteFiltrate.isEmpty()) {
+	        model.addAttribute("messaggioVuoto", "Non ci sono ricette per questa categoria!");
+	    }
+
+	    return "index.html"; // stessa homepage
+	}
 	
 }
