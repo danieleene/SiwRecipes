@@ -19,8 +19,9 @@ public class AdminController {
     private UtenteService utenteService;
 
     @Autowired
-   private CredenzialiService credenzialiService;
+    private CredenzialiService credenzialiService;
 
+    //Funzionalità ADMIN: per bannare un utente
     @PostMapping("/admin/utente/{id}/banna")
     public String bannaUtente(@PathVariable Long id) {
         Credenziali logged = credenzialiService.getCurrentCredentials();
@@ -36,6 +37,8 @@ public class AdminController {
         return "redirect:/admin/gestioneUtenti";
     }
 
+
+    //Funzionalità ADMIN: per attivare un utente
     @PostMapping("/admin/utente/{id}/attiva")
     public String attivaUtente(@PathVariable Long id) {
         Utente utente = utenteService.getUtenteById(id);
@@ -43,6 +46,7 @@ public class AdminController {
         utenteService.saveUtente(utente);
         return "redirect:/admin/gestioneUtenti";
     }
+
     
     @GetMapping("/admin/gestioneUtenti")
     public String gestioneUtenti(Model model) {
