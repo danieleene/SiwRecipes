@@ -14,6 +14,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private CredenzialiService credenzialiService;
 
+    //NOTA TECNICA: utilizzo l'email come username
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Credenziali cred = credenzialiService.getCredenziali(email);
