@@ -27,13 +27,16 @@ public class RecensioneController {
 	@Autowired CredenzialiService credenzialiService;
 	
 	@Autowired RicettaService ricettaService;
-	
+
+
+	 //per ottenere una recensione a partire dal suo ID
 	  @GetMapping("/recensione/{id}")
 	  public String getRecensione(@PathVariable("id") Long id, Model model) {
 	    model.addAttribute("recensione", this.recensioneService.getRecensioneById(id));
 	    return "recensione.html";
 	  }
 
+	 //per  ottenere la lista di tutte le recensioni
 	  @GetMapping("/recensione")
 	  public String showRecensioni(Model model) {
 	    model.addAttribute("recensioni", this.recensioneService.getAllRecensioni());
@@ -98,6 +101,8 @@ public class RecensioneController {
 	      return "redirect:/ricetta/" + idRicetta;
 	  }
 
+
+	  //per eliminare una recensione
 	  @GetMapping("/recensione/{id}/delete")
 	  public String deleteRecensione(@PathVariable("id") Long id) {
 
@@ -136,7 +141,7 @@ public class RecensioneController {
 
 
 
-
+    //Metodi per modificare una recensione
 	@GetMapping("/recensione/{id}/edit")
 	  public String formEditRecensione(@PathVariable("id") Long id,
 	                                   Model model) {
