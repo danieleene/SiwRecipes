@@ -24,6 +24,7 @@ public class AuthenticationController {
 	@Autowired private PasswordEncoder passwordEncoder;
 
 	@Autowired private RicettaService ricettaService;
+
 	
 	//REGISTER FORM
 	@GetMapping(value = "/register")
@@ -35,7 +36,7 @@ public class AuthenticationController {
 	
 	
 	
-
+    //Registrazione utente
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute("credenziali") Credenziali credenziali) {
 
@@ -88,6 +89,8 @@ public class AuthenticationController {
 	    return "index.html";
 	}
 
+
+	//Ricerca per CATEGORIA
 	@GetMapping("/ricette/categoria")
 	public String ricettePerCategoria(String nome, Model model) {
 
