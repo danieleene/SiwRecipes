@@ -26,7 +26,7 @@ public class UtenteController {
 	
 	@Autowired private PasswordEncoder passwordEncoder;
 
-	
+	  //Risponde con una pagina che contiene il profilo dell'utente
 	  @GetMapping("/utente/{id}")
 	  public String getUtente(@PathVariable("id") Long id, Model model) {
 
@@ -44,12 +44,16 @@ public class UtenteController {
 	    return "profilo.html";
 	  }
 
+
+	  
 	  @GetMapping("/utente")
 	  public String showUtenti(Model model) {
 	    model.addAttribute("utenti", this.utenteService.getAllUtenti());
 	    return "utenti.html";
 	  }
 
+
+	//Risponde con una pagina che contiene il profilo dell'utente loggato
 	@GetMapping("/profilo")
 	  public String mostraProfilo(Model model) {
 
@@ -72,7 +76,7 @@ public class UtenteController {
 
 	  
 	  
-	  
+	  //Risponde con una pagina che contiene la form che consente di modificare il profilo
 	  @GetMapping("/profilo/modifica")
 	  public String modificaProfilo(Model model) {
 
@@ -125,7 +129,7 @@ public class UtenteController {
 	      return "redirect:/profilo";
 	  }
 	  
-
+      //Risponde con una pagina di "Accesso Negato"
 	  @GetMapping("/accessoNegato")
 	  public String accessoNegato() {
 	      return "accessoNegato.html";
