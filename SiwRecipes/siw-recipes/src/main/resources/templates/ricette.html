@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Elenco Ricette</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header>
+    <h1>Elenco delle Ricette</h1>
+    <nav>	
+	     <a href="/">Home</a>
+	</nav>
+</header>
+
+
+<!-- Caso in cui non ci sono ricette -->
+<div th:if="${#lists.isEmpty(ricette)}">
+    <p>Non ci sono ricette disponibili.</p>
+</div>
+
+<!-- Tabella ricette -->
+<table th:if="${!#lists.isEmpty(ricette)}">
+    <thead>
+        <tr>
+            <th>Titolo</th>
+            <th>Categoria</th>
+            <th>Difficoltà</th>
+            <th>Tempo</th>
+            <th>Autore</th>
+            <th>Dettagli</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="ricetta : ${ricette}">
+            <td th:text="${ricetta.titolo}"></td>
+            <td th:text="${ricetta.categoria}"></td>
+            <td th:text="${ricetta.difficolta}"></td>
+            <td th:text="${ricetta.tempo + ' min'}"></td>
+            <td th:text="${ricetta.autore.nome + ' ' + ricetta.autore.cognome}"></td>
+
+            <!-- Link ai dettagli della ricetta-->
+            <td>
+                <a th:href="@{'/ricetta/' + ${ricetta.id}}">Vedi</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>
