@@ -38,6 +38,14 @@
 			Gestione Utenti
 			</a>
 
+
+			<!--Link visibile SOLO agli ADMIN per gestire le ricette -->
+			<a th:if="${ruolo == 'ADMIN'}"
+			   href="/ricetta"
+			   style="margin-left: 20px;">
+			   Gestione Ricette
+			</a>
+			
 			<!-- Link per aggiungere una nuova ricetta (visibile a USER e ADMIN) -->
 			<a href="/formNewRicetta" style="margin-left: 20px;">
 			    Aggiungi una nuova ricetta
